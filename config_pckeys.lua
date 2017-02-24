@@ -1,4 +1,5 @@
 DEBUG = true
+CLEAR_LOG_ON_HYPER_KEY = true
 EVENTPROPERTY_EVENTSOURCEUSERDATA = 42 -- print(hs.inspect(hs.eventtap.event.properties))
 
 -- For bindings that require canceling the current key event and spawing a new event with a delay
@@ -56,6 +57,11 @@ menuPath = {
 
 combo = {
 
+  find = {
+    default = {{'cmd'}, 'f'},
+    Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
+    VirtualBox_VM = {}
+  },
   cut = { -- No default key here will signal a menu command instead. See sendKeyOrMenu()
     default = {{'cmd'}, 'x'},
     Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
@@ -70,11 +76,6 @@ combo = {
     default = {{'cmd'}, 'v'},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
-  },
-  cutFn = { -- Used by ctrl+fn which can't pass that combo through to non-mac contexts
-    default = {{'cmd'}, 'x'},
-    Microsoft_Remote_Desktop = {{'ctrl'}, 'x'}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
-    VirtualBox_VM = {{'ctrl'}, 'x'}
   },
   copyFn = { -- Used by ctrl+fn which can't pass that combo through to non-mac contexts
     default = {{'cmd'}, 'c'},
@@ -215,16 +216,39 @@ keyEvents = {
   ctrlEnd        = function(e) return sendKey(getCombo('docEnd')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
   ctrlShiftEnd   = function(e) return sendKey(getCombo('selectDocEnd')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
 
+  find           = function() return sendKey(getCombo('find')) end,
+
   ctrlX          = function() return sendKeyOrMenu('cut') end,
-  ctrlC          = function() return sendKeyOrMenu('copy') end,
+  ctrlC          = function()
+    ret = sendKeyOrMenu('copy')
+    hs.timer.delayed.new(1, function()
+      dump('Regular copied. pasteboard=' .. hs.pasteboard.getContents())
+    end):start()
+    return ret
+  end,
   ctrlP          = function() return sendKeyOrMenu('paste') end,
   ctrlS          = function() return sendKeyOrMenu('save') end,
   ctrlZ          = function() return sendKeyOrMenu('undo') end,
   ctrlY          = function() return sendKeyOrMenu('redo') end,
 
-  ctrlFn         = function() return sendKey(getCombo('copyFn')) end,
+  ctrlFn         = function()
+    ret = sendKey(getCombo('copy'))
+      hs.timer.delayed.new(1, function()
+    	dump('Copied. pasteboard=' .. hs.pasteboard.getContents())
+    end):start()
+    return ret
+  end,
+  --function() return sendKey(getCombo('copyFn')) end,
   shiftFn        = function() return sendKey(getCombo('pasteFn')) end,
-  shiftFwdDelete = function() return sendKey(getCombo('cutFn')) end,
+  shiftFwdDelete = function()
+    --hs.alert(hs.application.frontmostApplication():name())
+    ret = sendKey(getCombo('cut'))
+    hs.timer.delayed.new(1, function()
+      dump('Special cut. pasteboard=' .. hs.pasteboard.getContents())
+    end):start()
+    return ret
+  end,
+  --return sendKey(getCombo('cut')) end,
 
   ctrlA          = function() return sendKeyOrMenu('selectAll') end,
 

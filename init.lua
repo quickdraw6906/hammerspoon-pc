@@ -10,6 +10,14 @@ hs.console.clearConsole()
 require 'functions_pckeys'
 require 'config_pckeys'
 
+hs.application.watcher.new(
+  function(name, type, app)
+    if app == 'Hammerspoon' and type == hs.application.watcher.activated then
+      hs.console.clearConsole()
+    end
+  end
+):start()
+
 -- -------------------------------------------------------------------------------------
 -- Launch Chrome or focus it if already running
 -- -------------------------------------------------------------------------------------
@@ -112,9 +120,9 @@ end)
 -- Note: by trapping flag changes, with no actual event to shunt, any key events created here will prop to the OS of VM and RDP
 -- windows (VitualBox and Microsoft Remote Desktop). So, these shortcuts won't work in those contexts
 hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
-  log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
-
-  if e:getFlags().fn then
+  -- log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
+  flags = e:getFlags()
+  if flags.fn then
     if hs.eventtap.checkKeyboardModifiers().ctrl then -- Ctrl + Fn is same position physically as Ctrl + Insert on PC keyboard
 
       keyEvents.ctrlFn()
@@ -123,6 +131,10 @@ hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
       keyEvents.shiftFn()
     end
   end
+  if flags.cmd and flags.ctrl and flags.alt and CLEAR_LOG_ON_HYPER_KEY then
+    hs.console.clearConsole()
+  end
+
 end):start()
 
 -- -------------------------------------------------------------------------------------
@@ -165,6 +177,10 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
 
       if kc == 1 then -- S = save
         return keyEvents.ctrlS()
+      end
+
+      if kc == 3 then -- S = save
+        return keyEvents.find()
       end
 
       if kc == 6 then -- Z = undo
@@ -272,11 +288,9 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
           return keyEvents.shiftEnd() -- Pass through keycode sans modifiers for mac context
         end
       end
-
     end -- if flags.ctrl then
-
   end -- if data ~= 55555 then
-  -- Cancel event or app will do what a normal key press does
+  -- Cancel event or app will do what a normal key press doesfff
   return cancel
 
 end)
@@ -306,7 +320,7 @@ etKeyUp = hs.eventtap.new({hs.eventtap.event.types.keyUp}, function (e)
   -- for a key up event from the last event in the scripted chain of events
   -- and disable the event shunt eventtap and this eventtap
   if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == 55556 then
-    log('Disabling shunt')
+    --log('Disabling shunt')
     ekKeyDownShuntCtrl:stop()
     etKeyUp:stop()
   end

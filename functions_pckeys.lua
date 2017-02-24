@@ -4,9 +4,9 @@
 
 function dump(var, fAlert)
   if type(var) == 'table' then
-    out = hs.inspect(var)
+    out = 'DUMP: '  .. hs.inspect(var)
   else
-    out = var
+    out = 'DUMP: '  .. var
   end
   if fAlert then
       hs.alert(out)
@@ -31,22 +31,21 @@ end
 function getCombo(strCombo)
   -- Look up combo from combo table
   local app = string.gsub(hs.application.frontmostApplication():name(), ' ', '_')
-  log('Getting combo ' .. strCombo .. ' with subkey ' .. app)
+  --log('Getting combo ' .. strCombo .. ' with subkey ' .. app)
   local comboNode = combo[strCombo]
   if comboNode == nil then
-    log('Combo node not found: ' .. comboNode)
+    --log('Combo node not found: ' .. comboNode)
     return {}
   end
   local keyCombo = comboNode[app]
   if keyCombo == nil then
-    log('No combo node for ' .. app .. '. Looking for default combo...')
+    --log('No combo node for ' .. app .. '. Looking for default combo...')
     keyCombo = comboNode['default']
   end
   if keyCombo == nil then
-    log('No default combo for ' .. strCombo )
+    --log('No default combo for ' .. strCombo )
     return {} -- No valid combo in table. Pass through event to OS.
   end
-  dump(keyCombo)
   return keyCombo
 end
 
@@ -84,16 +83,20 @@ function sendKey(combo, finishOfSequence)
   log('Sending key: ' .. key .. ' with modifiers: ' .. hs.inspect(modifiers))
 
   -- keyDown event
-  getKeyEvent(modifiers, key, true):post()
-  hs.timer.usleep(1000) -- tenth of a millisecond
-  -- See comment at moveBeginingOfNextWord() below
-  if finishOfSequence == true then
-    log('Enabling keyUp event')
-    etKeyUp:start()
-    semaphore = 0
-  end
-  -- keyUp event
-  getKeyEvent(modifiers, key, false, finishOfSequence):post()
+  hs.timer.delayed.new(.1, function()
+    print('Sending keyDown')
+    getKeyEvent(modifiers, key, true):post()
+    hs.timer.usleep(1000) -- tenth of a millisecond
+    -- See comment at moveBeginingOfNextWord() below
+    if finishOfSequence == true then
+      --log('Enabling keyUp event')
+      etKeyUp:start()
+      semaphore = 0
+    end
+    -- keyUp event
+    print('sending keyUp')
+    getKeyEvent(modifiers, key, false, finishOfSequence):post()
+  end):start()
 
   return true -- Don't prop the current event
 end
