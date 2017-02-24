@@ -121,7 +121,23 @@ combo = {
     --default = {{'cmd'}, 'a'}, -- Deprecated. For an unknown reason, cmd+a would not send! Sending menu command instead
     Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
     VirtualBox_VM = {}
+  },
+  bold = {
+    default = {{'cmd'}, 'b'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
+  },
+  italic = {
+    default = {{'cmd'}, 'i'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
+  },
+  underline = {
+    default = {{'cmd'}, 'u'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   }
+
 }
 
 keyEvents = {
@@ -141,4 +157,7 @@ keyEvents = {
   menuRedo  = function() return sendKeyOrMenu('redo') end,
   selectAll = function() return sendKeyOrMenu('selectAll') end,
   --selectAll = function() return sendKey(getCombo('selectAll')) end
+  bold      = function() return sendKey(getCombo('bold')) end,
+  italic    = function() return sendKey(getCombo('italic')) end,
+  underline = function() return sendKey(getCombo('underline')) end
 }

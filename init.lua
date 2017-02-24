@@ -112,7 +112,7 @@ end)
 -- Note: by trapping flag changes, with no actual event to shunt, any key events created here will prop to the OS of VM and RDP
 -- windows (VitualBox and Microsoft Remote Desktop). So, these shortcuts won't work in those contexts
 hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
-  --log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
+  log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
 
   if e:getFlags().fn then
     if hs.eventtap.checkKeyboardModifiers().ctrl then -- Ctrl + Fn is same position physically as Ctrl + Insert on PC keyboard
@@ -195,12 +195,24 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
         return keyEvents.menuPaste()
       end
 
+      if kc == 11 then -- B = bold
+        return keyEvents.bold()
+      end
+
       if kc == 13 then -- W = close
         return keyEvents.menuClose()
       end
 
       if kc == 16 then -- Y = redo
         return keyEvents.menuRedo()
+      end
+
+      if kc == 32 then -- U = underline
+        return keyEvents.underline()
+      end
+
+      if kc == 34 then -- I = italics
+        return keyEvents.italic()
       end
 
       -- If ctrl+home|end pressed, strip off ctrl and send home|end Flip what mac does with what pc does)
@@ -223,13 +235,12 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
       -- at the OS level to make it all work. Very tricky business. Sigh.
       if kc == 124 then -- right arrow
       	log('Right arrow')
-        moveBeginingOfNextWord()
-        cancel = true
+        return moveBeginingOfNextWord()
       end
       if kc == 123 then -- right arrow
       	log('Left arrow')
-        moveBeginingOfPreviousWord()
-        cancel = true
+        return keyEvents.altLeft(true)
+        --return moveBeginingOfPreviousWord()
       end
     end
   end
