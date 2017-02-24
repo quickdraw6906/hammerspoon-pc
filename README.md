@@ -26,7 +26,7 @@ There is only one "real" keyboard layout for max efficiency. Mac has such a layo
 ## Open Issues
 Select word (next/previous) is buggy. There event issues on repeat strokes. You end up switching desktops. I tried to go as low level as possible, but some events fall through to the OS.
 
-shift+fn is not working for paste in VirtualBox
+x/c/p right hand functions (ctrl+fn, shift+fn, shift+forwarddelete not working in VirtualBox yet. 
 
 A screen grab function could not be done totally gracefully because from th Grab app Hammerspoon couldn't load the image in the pasteboard into a variable. Something to research...
 

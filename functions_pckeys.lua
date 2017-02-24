@@ -19,8 +19,8 @@ function log(message)
   if DEBUG == true then print(message) end
 end
 
-
 -- Make keyboard events to send to OS
+-- Trying to go low level to get the right things to happen in VMs. A work in progress.
 function getKeyEvent(modifiers, key, keyDownEvent, finish)
   local data = userData
   if finish == true then data = 55556 end -- Signal keyUp eventtrap to unset semaphore
@@ -49,7 +49,7 @@ function getCombo(strCombo)
   return keyCombo
 end
 
--- Lookup a name menu path from a structure (see config_pckeys.lua) and return
+-- Lookup a name menu path from a table structure (see config_pckeys.lua) and return
 -- a table with the menu path
 function getMenuPath(strMenuName)
   -- Look up combo from combo table
@@ -82,6 +82,7 @@ function sendKey(combo, finishOfSequence)
 
   log('Sending key: ' .. key .. ' with modifiers: ' .. hs.inspect(modifiers))
 
+  -- Tried just sending direct, but caused issues in various VM and RDP contexts
   -- keyDown event
   hs.timer.delayed.new(.1, function()
     print('Sending keyDown')
@@ -125,26 +126,12 @@ function sendKeyOrMenu(pasteboardOperation)
   return selectMenuItem(menuPth)
 end
 
-
+-- Half baked attempt to get VM and RDP contexts to work
 function unsetSemaphore()
   hs.timer.delayed.new(keySendDelay, function()
     --print('Unsetting semaphore')
     semaphore=0
   end):start()
-end
-
--- For ctrl+home|end we want begin|end of doc behavior, like on a PC. This behavior
--- is what regular home|end does on a mac by default. So the PC user used to hitting
--- ctrl+home|end can still do it and get the expected begin|end of doc action.
--- But when in RDS, a ctrl+home|end does what we expect, so if that is the current
--- app, don't clear the ctrl flag- just sent event as is.
-function sendCtrlEndHome(e) -- pass keyboard event (from hs.eventtrap.event)
-  local app = hs.application.frontmostApplication():name()
-  if app ~= 'Microsoft Remote Desktop' and app ~= 'VirtualBox_VM' then
-    log('Flags stripped')
-    e:setFlags({})
-  end
-  return false
 end
 
 -- Select a menu item
@@ -175,6 +162,7 @@ function selectMenuItem(tblMenuItem)
   end
   return false -- No menu found. Prop the current event down to the OS
 end
+
 
 -- Challenge here is to handle rapid repeats of ctrl+left|right without
 -- the event falling through to the OS (which switches desktops).
@@ -209,8 +197,3 @@ moveBeginingOfPreviousWord = function(flags)
   end
   return true
 end
-
-
---function selectMenuItemDelayed(tblMenuItem)
-  --hs.timer.delayed.new(keySendDelay, function() selectMenuItem(tblMenuItem) end):start()
---end
