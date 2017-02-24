@@ -3,6 +3,9 @@
 -- -------------------------------------------------------------------------------------
 
 function dump(var, fAlert)
+  if DEBUG ~= true then
+    return
+  end
   if type(var) == 'table' then
     out = 'DUMP: '  .. hs.inspect(var)
   else
@@ -85,7 +88,7 @@ function sendKey(combo, finishOfSequence)
   -- Tried just sending direct, but caused issues in various VM and RDP contexts
   -- keyDown event
   hs.timer.delayed.new(.1, function()
-    print('Sending keyDown')
+    log('Sending keyDown')
     getKeyEvent(modifiers, key, true):post()
     hs.timer.usleep(1000) -- tenth of a millisecond
     -- See comment at moveBeginingOfNextWord() below
@@ -95,7 +98,7 @@ function sendKey(combo, finishOfSequence)
       semaphore = 0
     end
     -- keyUp event
-    print('sending keyUp')
+    log('sending keyUp')
     getKeyEvent(modifiers, key, false, finishOfSequence):post()
   end):start()
 
@@ -129,7 +132,7 @@ end
 -- Half baked attempt to get VM and RDP contexts to work
 function unsetSemaphore()
   hs.timer.delayed.new(keySendDelay, function()
-    --print('Unsetting semaphore')
+    --log('Unsetting semaphore')
     semaphore=0
   end):start()
 end

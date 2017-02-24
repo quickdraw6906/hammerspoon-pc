@@ -1,4 +1,4 @@
-DEBUG = true
+DEBUG = false
 CLEAR_LOG_ON_HYPER_KEY = true
 EVENTPROPERTY_EVENTSOURCEUSERDATA = 42 -- print(hs.inspect(hs.eventtap.event.properties))
 

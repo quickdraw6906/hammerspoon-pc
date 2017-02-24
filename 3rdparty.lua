@@ -7,6 +7,9 @@
 -- Thanks to gwww for these goodies"
 -- https://github.com/gwww/dotfiles/blob/master/_hammerspoon/init.lua
 
+local configFileWatcher = nil
+local appWatcher = nil
+
 -- Reload config automatically
 function reloadConfig()
   configFileWatcher:stop()
