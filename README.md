@@ -47,3 +47,5 @@ Main keys|[Del][End] [Pg Dn]|[7] [8] [9] [-]
 Main keys||[4] [5] [6] [+]
 Main keys|[Up]|[1] [2] [3] [Ent]
 [Ctrl] [Win] [Alt] [Space] [Alt] [Win] [Ctrl]  |  [Left] [Down] [Right]|[Zero][Dot][Ent]
+
+Herm...so much for tables in Github. Renders fine here [kramdown renderer](https://kramdown.herokuapp.com/)
