@@ -9,25 +9,8 @@
 hs.console.clearConsole()
 require 'functions_pckeys'
 require 'config_pckeys'
-
-hs.application.watcher.new(
-  function(name, type, app)
-    if app == 'Hammerspoon' and type == hs.application.watcher.activated then
-      hs.console.clearConsole()
-    end
-  end
-):start()
-
--- -------------------------------------------------------------------------------------
--- Launch Chrome or focus it if already running
--- -------------------------------------------------------------------------------------
--- Go get the following file and put in ~/.hammerspoon,
--- Source: https://github.com/vic/.hammerspoon/blob/master/ext/application.lua
--- Then, uncomment the rest of the lines in the paragraph for powerful goodness
-local module = {}
-local smartLaunchOrFocus = require('application').smartLaunchOrFocus
--- Launch Chrome or cycle through open windows
-hs.hotkey.bind(ultra, 'space', function() smartLaunchOrFocus('Google Chrome') end)
+require '3rdparty'
+require 'screen_grab'
 
 -- -------------------------------------------------------------------------------------
 -- General
@@ -46,68 +29,6 @@ hs.hotkey.bind({'cmd', 'shift'}, 'R', function() hs.reload() end)
 hs.hotkey.bind({'cmd', 'shift'}, 'C', function() hs.console.clearConsole() end)
 hs.hotkey.bind({'alt'}, 'A', function() hs.alert(hs.application.frontmostApplication():name()) end)
 hs.hotkey.bind({'alt'}, 'B', function() hs.alert(hs.application.frontmostApplication():bundleID()) end)
-
--- -------------------------------------------------------------------------------------
--- Quick and easy screen capture
--- -------------------------------------------------------------------------------------
--- Launch a screen capture that will copy the result to the pastboard
--- Great for quick snips to paste into another app
--- (Wanted to kill grabber (kill9) so it didn't prompt to save file, but alas
--- doing that lost the image from the pastboard, and Hammerspoon couldn't read
--- the image into a variable for some reason.
-maxTimer = 20
-timerNum = 0
-checkForCaptureTimer = nil
-GRABBUNDLEID = 'com.apple.Grab'
-capturedImage = nil
-hs.hotkey.bind({'alt'}, 'G', function()
-  -- Stop any previous timer checking for a Grab window
-  if checkForCaptureTimer ~= nil then
-    checkForCaptureTimer:stop()
-  end
-  -- Launch Grab app
-  hs.application.launchOrFocusByBundleID(GRABBUNDLEID)
-  log(hs.inspect(hs.application.applicationsForBundleID(GRABBUNDLEID)))
-  grabApp = hs.application.applicationsForBundleID(GRABBUNDLEID)[1]
-  if grabApp == nil then
-    hs.alert('Grab app not found.')
-    return
-  end
-  -- If Grab already running, bail (nee no windows open in Grab so can detect when a new one opens)
-  wins = grabApp:mainWindow()
-  if win ~= nil then
-      hs.alert('Existing window found. Aborting. Dismiss window and try again.')
-      return
-  end
-
-  log('Reqesting selection capture')
-  grabApp:selectMenuItem({'Capture', 'Selection'})
-
-  -- Wait for user to make the selection (Grab to open a new window)
-  timerNum = 0
-  checkForCaptureTimer = hs.timer.doEvery(1, function()
-    timerNum = timerNum + 1
-    grabApp = hs.application.applicationsForBundleID(GRABBUNDLEID)[1]
-    if grabApp == nil then
-      hs.alert('Grab app not found. Did you quit before making a selection?')
-      checkForCaptureTimer:stop()
-      return
-    end
-    wins = grabApp:mainWindow()
-      if wins == nil then
-        log('No Grab window yet')
-        if timerNum > maxTimer then
-          hs.alert('You waited to long to make your selection. Please try again.')
-          checkForCaptureTimer:stop()
-        end
-        return
-      end
-      checkForCaptureTimer:stop()
-      grabApp = hs.application.applicationsForBundleID(GRABBUNDLEID)[1]
-      grabApp:selectMenuItem({'Edit', 'Copy'})
-      hs.alert('Selection copied')
-    end)
-end)
 
 -- -------------------------------------------------------------------------------------
 -- Trap flagsChanged
@@ -326,6 +247,15 @@ etKeyUp = hs.eventtap.new({hs.eventtap.event.types.keyUp}, function (e)
   end
 end)
 
+
+-- Doesn't work, issue created
+hs.application.watcher.new(
+  function(name, type, app)
+    if app == 'Hammerspoon' and type == hs.application.watcher.activated then
+      hs.console.clearConsole()
+    end
+  end
+):start()
 
 
 -- -------------------------------------------------------------------------------------
