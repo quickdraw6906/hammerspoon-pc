@@ -245,10 +245,10 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
       if kc == 123 then -- right arrow
         if flags.shift then
           log('Ctrl Shift Right arrow')
-          return keyEvents.ctrlShiftLeft()
+          return keyEvents.ctrlShiftRight()
         else
           log('Ctrl Right arrow')
-          return keyEvents.ctrlLeft()
+          return keyEvents.ctrlRight()
         end
       end
 
