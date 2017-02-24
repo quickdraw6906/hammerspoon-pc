@@ -16,7 +16,7 @@ IT professionals who need to administer PC's remotely and use alternate OS's nee
 
 Add all that up and Left hand mouse keyboard wizards coming from decades of PC use (with dimishing brain plasticity) using Mac OS 10.12 (Sierra)...are pretty much screwed. These scripts are an attempt to ease the transition**
 
-* Hello Karabiner Elements as a reaction to issues with keyboard Sierra hell for us GTD folks.
+\* Hello Karabiner Elements as a reaction to issues with keyboard Sierra hell for us GTD folks.
 
 ** Also a hope is to forestall arthritis by having to do the contortions the Mac keyboard layout cause.
 
@@ -28,7 +28,7 @@ Select word (next/previous) is buggy. There event issues on repeat strokes. You 
 
 shift+fn is not working for paste in VirtualBox
 
-A screen grab function could be done totally gracefully because from th Grab app Hammerspoon couldn't load the image in the pasteboard into a variable. Something to research...
+A screen grab function could not be done totally gracefully because from th Grab app Hammerspoon couldn't load the image in the pasteboard into a variable. Something to research...
 
 I keep having the situation where Hammerspoon loses all eventtaps. I have to reload the config periodically. Would love some insights into that. I might have to schedule a reload on a timer every 30 seconds or so (yuck).
 
@@ -40,12 +40,11 @@ I'm still learning a ton about keyboard events. Any wisdom is appreciated.
 
 For keyboards with this layout, and a left hand mouser:
 ```
---------------------------------------------------|----------------------------------------|----------------|
-		               Function keys                  |  [prt scr] [scroll lock] [pause/break] | 			          |
-		                 Main keys		                |    [Ins]       [Home]       [Pg Up]    | 		    	      |
-		                 Main keys		                |    [Del]       [Home]       [Pg Dn]    |     10 key 	  |
-		                 Main keys		                | 			                  							 |			          |
-		                 Main keys		                |                [Up]                    |  			        |
-	  [Ctrl] [Win] [Alt] [Space] [Alt] [Win] [Ctrl] |        [Left] [Down] [Right]           |			          |
-------------------------------------------------------------------------------------------------------------		      
+----------------------------------------------|----------------------------------------|----------------|
+               Function keys               |  [prt scr] [scroll lock] [pause/break] | 			          |
+                 Main keys		            |    [Ins]       [Home]       [Pg Up]    | 		    	      |
+                 Main keys		            |    [Del]       [Home]       [Pg Dn]    |     10 key 	  |
+                 Main keys		            | 			                  							 |			          |
+                 Main keys		            |                [Up]                    |  			        |
+[Ctrl] [Win] [Alt] [Space] [Alt] [Win] [Ctrl] |        [Left] [Down] [Right]           |			          |    
 ```
