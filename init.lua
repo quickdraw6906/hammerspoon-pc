@@ -117,10 +117,10 @@ hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
   if e:getFlags().fn then
     if hs.eventtap.checkKeyboardModifiers().ctrl then -- Ctrl + Fn is same position physically as Ctrl + Insert on PC keyboard
 
-      keyEvents.ctrlC()
+      keyEvents.ctrlFn()
     end
     if hs.eventtap.checkKeyboardModifiers().shift then -- Shift + Fn is same position physically as Shift + Insert on a PC keyboard
-      keyEvents.ctrlP()
+      keyEvents.shiftFn()
     end
   end
 end):start()
@@ -224,7 +224,6 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
           return keyEvents.ctrlEnd()
         end
       end
-
       -- Warning: Overrides control+arrows for navigating desktops
       -- This doesn't quite work right yet. If you repeat too fast the OS will get
       -- the event and you will switch desktops if you have multiple open. Sigh.
@@ -265,7 +264,7 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
         end
 
         if kc == 117 then -- forwarddelete = cut
-          keyEvents.ctrlX()
+          keyEvents.shiftFwdDelete()
           return true
         end
 

@@ -26,6 +26,8 @@ There is only one "real" keyboard layout for max efficiency. Mac has such a layo
 ## Open Issues
 Select word (next/previous) is buggy. There event issues on repeat strokes. You end up switching desktops. I tried to go as low level as possible, but some events fall through to the OS.
 
+shift+fn is not working for paste in VirtualBox
+
 A screen grab function could be done totally gracefully because from th Grab app Hammerspoon couldn't load the image in the pasteboard into a variable. Something to research...
 
 I keep having the situation where Hammerspoon loses all eventtaps. I have to reload the config periodically. Would love some insights into that. I might have to schedule a reload on a timer every 30 seconds or so (yuck).

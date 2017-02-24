@@ -46,6 +46,7 @@ function getCombo(strCombo)
     log('No default combo for ' .. strCombo )
     return {} -- No valid combo in table. Pass through event to OS.
   end
+  dump(keyCombo)
   return keyCombo
 end
 

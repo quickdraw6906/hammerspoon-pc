@@ -23,8 +23,7 @@ menuPath = {
   },
   copy = {
     default = {'Edit', 'Copy'},
-    Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    Microsoft_Remote_Desktop = {}
   },
   paste = {
     default = {'Edit', 'Paste'},
@@ -56,6 +55,7 @@ menuPath = {
 }
 
 combo = {
+
   cut = { -- No default key here will signal a menu command instead. See sendKeyOrMenu()
     default = {{'cmd'}, 'x'},
     Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
@@ -70,7 +70,21 @@ combo = {
     default = {{'cmd'}, 'v'},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
-
+  },
+  cutFn = { -- Used by ctrl+fn which can't pass that combo through to non-mac contexts
+    default = {{'cmd'}, 'x'},
+    Microsoft_Remote_Desktop = {{'ctrl'}, 'x'}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
+    VirtualBox_VM = {{'ctrl'}, 'x'}
+  },
+  copyFn = { -- Used by ctrl+fn which can't pass that combo through to non-mac contexts
+    default = {{'cmd'}, 'c'},
+    Microsoft_Remote_Desktop = {{'ctrl'}, 'c'},
+    VirtualBox_VM = {{'ctrl'}, 'c'}
+  },
+  pasteFn = { -- Used by ctrl+fn which can't pass that combo through to non-mac contexts
+    default = {{'cmd'}, 'v'},
+    Microsoft_Remote_Desktop = {{'ctrl'}, 'p'},
+    VirtualBox_VM = {{'ctrl'}, 'p'}
   },
   save = {
     default = {{'cmd'}, 's'},
@@ -183,11 +197,11 @@ combo = {
 }
 
 keyEvents = {
-  ctrlLeft       = function(finish) return sendKey(getCombo('nextWord')) end,
-  ctrlShiftLeft  = function(finish) return sendKey(getCombo('selectNextWord')) end,
+  ctrlLeft       = function() return sendKey(getCombo('nextWord')) end,
+  ctrlShiftLeft  = function() return sendKey(getCombo('selectNextWord')) end,
 
-  ctrlRight      = function(finish) return sendKey(getCombo('prevWord')) end,
-  ctrlShiftRight = function(finish) return sendKey(getCombo('selectPrevWord')) end,
+  ctrlRight      = function() return sendKey(getCombo('prevWord')) end,
+  ctrlShiftRight = function() return sendKey(getCombo('selectPrevWord')) end,
 
   home           = function(e) return sendKey(getCombo('beginLine')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
   shiftHome      = function(e) return sendKey(getCombo('selectBeginLine')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
@@ -207,6 +221,10 @@ keyEvents = {
   ctrlS          = function() return sendKeyOrMenu('save') end,
   ctrlZ          = function() return sendKeyOrMenu('undo') end,
   ctrlY          = function() return sendKeyOrMenu('redo') end,
+
+  ctrlFn         = function() return sendKey(getCombo('copyFn')) end,
+  shiftFn        = function() return sendKey(getCombo('pasteFn')) end,
+  shiftFwdDelete = function() return sendKey(getCombo('cutFn')) end,
 
   ctrlA          = function() return sendKeyOrMenu('selectAll') end,
 
