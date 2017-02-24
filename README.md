@@ -42,12 +42,12 @@ For keyboards with this layout, and a left hand mouser:
 
 |Main Area|Magic Happens|Ten Key Area
 | :-------------: | :-----------: | :---------------: |
-[~][F1]..........................[F12][Eject]|[PrtScr] [ScrLck] [P/Brk]|~~~[F16][F17][F18][F19]~~~
+[~][F1]..........................[F12][Eject]|[PrtScr] [ScrLck] [P/Brk]|~~[F16][F17][F18][F19]~~
 Main keys|[Ins][Home][Pg Up]|[Clr][Eq][Div][Mul]
 Main keys|[Del][End] [Pg Dn]|[7] [8] [9] [-]
 Main keys||[4] [5] [6] [+]
 Main keys|[Up]|[1] [2] [3] [Ent]
 [Ctrl] [Win] [Alt] [Space] [Alt] [Win] [Ctrl]  |  [Left] [Down] [Right]|[Zero][Dot][Ent]
 
-~~~Herm...so much for tables in Github. Renders fine here [kramdown renderer](https://kramdown.herokuapp.com/)~~~
+~~Herm...so much for tables in Github. Renders fine here [kramdown renderer](https://kramdown.herokuapp.com/)~~
 Note to self: tables need a blank line immediately preceding.
