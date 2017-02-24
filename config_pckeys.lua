@@ -80,45 +80,72 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {{'ctrl'}, 'Y'}
   },
-  altLeft = {
-    default = {{'alt'}, 'left'},
-    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
-  },
-  altRight = {
+
+  nextWord = {
     default = {{'alt'}, 'right'},
     Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
   },
-  homeKey = {
-    default = {{'cmd'}, 'left'},
-    Terminal = {{'ctrl'}, 'a'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
-    VirtualBox_VM = {}
+  selectNextWord = {
+    default = {{'alt', 'shift'}, 'right'},
+    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
   },
-  endKey = {
+
+  prevWord = {
+    default = {{'alt'}, 'left'},
+    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+  },
+  selectPrevWord = {
+    default = {{'alt', 'shift'}, 'left'},
+    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+  },
+
+  endLine = {
     default = {{'cmd'}, 'right'},
-    Terminal = {{'ctrl'}, 'e'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
-    VirtualBox_VM = {}
+    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
   },
-  shiftHome = {
-    default = {{'cmd', 'shift'}, 'left'},
-    Terminal = {{'ctrl'}, 'a'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
-    VirtualBox_VM = {}
-  },
-  shiftEnd = {
+  selectEndLine = {
     default = {{'cmd', 'shift'}, 'right'},
-    Terminal = {{'ctrl'}, 'e'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+  },
+
+  beginLine = {
+    default = {{'cmd'}, 'left'},
+    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+  },
+  selectBeginLine = {
+    default = {{'cmd', 'shift'}, 'left'},
+    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+  },
+
+  docBegin = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
+    default = {{'cmd'}, 'up'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+home
     VirtualBox_VM = {}
   },
+  selectDocBegin = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
+    default = {{'cmd','shift'}, 'up'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+shift+home
+    VirtualBox_VM = {}
+  },
+
+  docEnd = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
+    default = {{'cmd'}, 'down'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+end
+    VirtualBox_VM = {}
+  },
+  selectDocEnd = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
+    default = {{'cmd', 'shift'}, 'down'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+end
+    VirtualBox_VM = {}
+  },
+
   close = {
     default = {{'cmd'}, 'W'},
     Microsoft_Remote_Desktop = {{'ctrl'}, 'W'}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
     VirtualBox_VM = {{'ctrl'}, 'W'}
   },
   selectAll = {
-    --default = {{'cmd'}, 'a'}, -- Deprecated. For an unknown reason, cmd+a would not send! Sending menu command instead
+    --default = {{'cmd'}, 'a'}, -- Deprecated. For an unknown reason, cmd+a would not send! Since no default here, sendKeyOrMenu() will look to send a menu command instead
     Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
     VirtualBox_VM = {}
   },
@@ -137,27 +164,39 @@ combo = {
     Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
     VirtualBox_VM = {}
   }
-
 }
 
 keyEvents = {
-  altLeft   = function(finish) return sendKey(getCombo('altLeft'), finish) end,
-  altRight  = function(finish) return sendKey(getCombo('altRight'), finish) end,
-  endKey    = function() return sendKey(getCombo('endKey')) end,
-  homeKey   = function() return sendKey(getCombo('homeKey')) end,
-  shiftHome = function() return sendKey(getCombo('shiftHome')) end,
-  shiftEnd  = function() return sendKey(getCombo('shiftEnd')) end,
-  ctrlHome  = function(e) return sendCtrlEndHome(e) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
-  ctrlEnd   = function(e) return sendCtrlEndHome(e) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
-  menuCut   = function() return sendKeyOrMenu('cut') end,
-  menuCopy  = function() return sendKeyOrMenu('copy') end,
-  menuPaste = function() return sendKeyOrMenu('paste') end,
-  menuSave  = function() return sendKeyOrMenu('save') end,
-  menuUndo  = function() return sendKeyOrMenu('undo') end,
-  menuRedo  = function() return sendKeyOrMenu('redo') end,
-  selectAll = function() return sendKeyOrMenu('selectAll') end,
-  --selectAll = function() return sendKey(getCombo('selectAll')) end
-  bold      = function() return sendKey(getCombo('bold')) end,
-  italic    = function() return sendKey(getCombo('italic')) end,
-  underline = function() return sendKey(getCombo('underline')) end
+  ctrlLeft       = function(finish) return sendKey(getCombo('nextWord')) end,
+  ctrlShiftLeft  = function(finish) return sendKey(getCombo('selectNextWord')) end,
+
+  ctrlRight      = function(finish) return sendKey(getCombo('prevWord')) end,
+  ctrlShiftRight = function(finish) return sendKey(getCombo('selectPrevWord')) end,
+
+  home           = function(e) return sendKey(getCombo('beginLine')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
+  shiftHome      = function(e) return sendKey(getCombo('selectBeginLine')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
+
+  ctrlHome       = function() return sendKey(getCombo('docBegin')) end,
+  ctrlShiftHome  = function() return sendKey(getCombo('selectDocBegin')) end,
+
+  endKey         = function() return sendKey(getCombo('endLine')) end,
+  shiftEnd       = function() return sendKey(getCombo('selectEndLine')) end,
+
+  ctrlEnd        = function(e) return sendKey(getCombo('docEnd')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
+  ctrlShiftEnd   = function(e) return sendKey(getCombo('selectDocEnd')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
+
+  ctrlX          = function() return sendKeyOrMenu('cut') end,
+  ctrlC          = function() return sendKeyOrMenu('copy') end,
+  ctrlP          = function() return sendKeyOrMenu('paste') end,
+  ctrlS          = function() return sendKeyOrMenu('save') end,
+  ctrlZ          = function() return sendKeyOrMenu('undo') end,
+  ctrlY          = function() return sendKeyOrMenu('redo') end,
+
+  ctrlA          = function() return sendKeyOrMenu('selectAll') end,
+
+  ctrlB          = function() return sendKey(getCombo('bold')) end,
+  ctrlI          = function() return sendKey(getCombo('italic')) end,
+  ctrlU          = function() return sendKey(getCombo('underline')) end,
+
+  ctrlW          = function() return sendKey(getCombo('close')) end
 }

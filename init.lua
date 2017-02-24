@@ -117,10 +117,10 @@ hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
   if e:getFlags().fn then
     if hs.eventtap.checkKeyboardModifiers().ctrl then -- Ctrl + Fn is same position physically as Ctrl + Insert on PC keyboard
 
-      keyEvents.menuCopy()
+      keyEvents.ctrlC()
     end
     if hs.eventtap.checkKeyboardModifiers().shift then -- Shift + Fn is same position physically as Shift + Insert on a PC keyboard
-      keyEvents.menuPaste()
+      keyEvents.ctrlP()
     end
   end
 end):start()
@@ -143,25 +143,6 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
   if data ~= 55555 then
 
     -- -------------------------------------------
-    -- SHIFT COMBOS
-    -- -------------------------------------------
-    if flags.shift then
-      -- If ctrl+home|end pressed, strip off ctrl and send home|end Flip what mac does with what pc does)
-      if kc == 115 then -- Home = home (strip ctrl flag)
-        return keyEvents.shiftHome(e) -- Pass through keycode sans modifiers for mac context
-      end
-
-      if kc == 117 then -- forwarddelete = cut
-        keyEvents.menuCut()
-        return true
-      end
-
-      if kc == 119 then -- End = end (strip ctrl flag)
-        return keyEvents.shiftEnd(e) -- Pass through keycode sans modifiers for mac context
-      end
-    end
-
-    -- -------------------------------------------
     -- CTRL COMBOS
     -- -------------------------------------------
     if flags.ctrl then
@@ -172,56 +153,65 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
       end
 
       if kc == 0 then -- A = select all
-        return keyEvents.selectAll()
+        return keyEvents.ctrlA()
       end
 
       if kc == 1 then -- S = save
-        return keyEvents.menuSave()
+        return keyEvents.ctrlS()
       end
 
       if kc == 6 then -- Z = undo
-        return keyEvents.menuUndo()
+        return keyEvents.ctrlZ()
       end
 
       if kc == 7 then -- X = cut
-        return keyEvents.menuCut()
+        return keyEvents.ctrlX()
       end
 
       if kc == 8 then -- C = copy
-        return keyEvents.menuCopy()
+        return keyEvents.ctrlC()
       end
 
       if kc == 9 then -- V = paste
-        return keyEvents.menuPaste()
+        return keyEvents.ctrlP()
       end
 
       if kc == 11 then -- B = bold
-        return keyEvents.bold()
+        return keyEvents.ctrlB()
       end
 
       if kc == 13 then -- W = close
-        return keyEvents.menuClose()
+        return keyEvents.ctrlW()
       end
 
       if kc == 16 then -- Y = redo
-        return keyEvents.menuRedo()
+        return keyEvents.ctrlY()
       end
 
       if kc == 32 then -- U = underline
-        return keyEvents.underline()
+        return keyEvents.ctrlU()
       end
 
       if kc == 34 then -- I = italics
-        return keyEvents.italic()
+        return keyEvents.ctrlI()
       end
 
-      -- If ctrl+home|end pressed, strip off ctrl and send home|end Flip what mac does with what pc does)
+      -- If ctrl+home pressed, strip off ctrl and send home Flip what mac does with what pc does)
       if kc == 115 then -- Home = home (strip ctrl flag)
-        return sendCtrlEndHome(e) -- Pass through keycode sans modifiers for mac context
+        if flags.shift then
+          log('here')
+          return keyEvents.ctrlShiftHome() -- Pass through keycode sans modifiers for mac context
+        else
+          return keyEvents.ctrlHome()
+        end
       end
 
       if kc == 119 then -- End = end (strip ctrl flag)
-        return sendCtrlEndHome(e) -- Pass through keycode sans modifiers for mac context
+        if flags.shift then
+          return keyEvents.ctrlShiftEnd() -- Pass through keycode sans modifiers for mac context
+        else
+          return keyEvents.ctrlEnd()
+        end
       end
 
       -- Warning: Overrides control+arrows for navigating desktops
@@ -234,16 +224,48 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
       -- sequential playback, with shunting of other mapping operations and cancelling events
       -- at the OS level to make it all work. Very tricky business. Sigh.
       if kc == 124 then -- right arrow
-      	log('Right arrow')
-        return moveBeginingOfNextWord()
+        if flags.shift then
+          log('Ctrl Shift Left arrow')
+          return keyEvents.ctrlShiftLeft()
+        else
+          log('Ctrl Right arrow')
+          return keyEvents.ctrlLeft()
+        end
       end
       if kc == 123 then -- right arrow
-      	log('Left arrow')
-        return keyEvents.altLeft(true)
-        --return moveBeginingOfPreviousWord()
+        if flags.shift then
+          log('Ctrl Shift Right arrow')
+          return keyEvents.ctrlShiftLeft()
+        else
+          log('Ctrl Right arrow')
+          return keyEvents.ctrlLeft()
+        end
       end
-    end
-  end
+
+    else
+      -- -------------------------------------------
+      -- SHIFT COMBOS
+      -- -------------------------------------------
+      if flags.shift then
+
+        -- If ctrl+home|end pressed, strip off ctrl and send home|end Flip what mac does with what pc does)
+        if kc == 115 then -- Home = home (strip ctrl flag)
+          return keyEvents.shiftHome() -- Pass through keycode sans modifiers for mac context
+        end
+
+        if kc == 117 then -- forwarddelete = cut
+          keyEvents.ctrlX()
+          return true
+        end
+
+        if kc == 119 then -- End = end (strip ctrl flag)
+          return keyEvents.shiftEnd() -- Pass through keycode sans modifiers for mac context
+        end
+      end
+
+    end -- if flags.ctrl then
+
+  end -- if data ~= 55555 then
   -- Cancel event or app will do what a normal key press does
   return cancel
 

@@ -13,8 +13,7 @@ end
 function getKeyEvent(modifiers, key, keyDownEvent, finish)
   local data = userData
   if finish == true then data = 55556 end -- Signal keyUp eventtrap to unset semaphore
-  e = hs.eventtap.event.newKeyEvent(modifiers, key, keyDownEvent):setProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA, data)
-  return e
+  return hs.eventtap.event.newKeyEvent(modifiers, key, keyDownEvent):setProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA, data)
 end
 
 -- Lookup a named combo from a structure (see config_pckeys.lua) and return a table of the modifiers + key to send
@@ -170,18 +169,30 @@ end
 -- to beginning of next work (left arrow) or current word begining to end of previous
 -- word (left arrow). For brains that aren't plastic enough to work the change to
 -- mac, let's keep it the same as PC.
-moveBeginingOfNextWord = function()
+moveBeginingOfNextWord = function(flags)
   --semaphore = 1
   --ekKeyDownShuntCtrl:start()
-  keyEvents.altRight()
-  keyEvents.altRight()
-  return keyEvents.altLeft(true)
-
+  if flags == 'shift' then
+    sendKey(getCombo('altShiftRight'))
+    sendKey(getCombo('altShiftRight'))
+    sendKey(getCombo('altShiftLeft'), true)
+  else
+    sendKey(getCombo('altRight'))
+    sendKey(getCombo('altRight'))
+    sendKey(getCombo('altLeft'), true)
+  end
+  return true
 end
-moveBeginingOfPreviousWord = function()
+moveBeginingOfPreviousWord = function(flags)
   --semaphore = 1
   --ekKeyDownShuntCtrl:start()
-  return keyEvents.altLeft(true)
+  if flags == 'shift' then
+    sendKey(getCombo('altShiftLeft'), true)
+    return true
+  else
+    sendKey(getCombo('altLeft'), true)
+  end
+  return true
 end
 
 
