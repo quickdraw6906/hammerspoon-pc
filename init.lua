@@ -143,6 +143,13 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
   if data ~= 55555 then
 
     -- -------------------------------------------
+    -- NO MODIFIER COMBOS
+    -- -------------------------------------------
+    if kc == 96 then -- F5 = reload
+      return keyEvents.ctrlR()
+    end
+
+    -- -------------------------------------------
     -- CTRL COMBOS
     -- -------------------------------------------
     if flags.ctrl then
@@ -182,6 +189,10 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
 
       if kc == 13 then -- W = close
         return keyEvents.ctrlW()
+      end
+
+      if kc == 15 then -- R = reload
+        return keyEvents.ctrlR()
       end
 
       if kc == 16 then -- Y = redo

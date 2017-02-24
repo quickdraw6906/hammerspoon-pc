@@ -163,6 +163,12 @@ combo = {
     default = {{'cmd'}, 'u'},
     Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
     VirtualBox_VM = {}
+  },
+
+  reload = {
+    default = {{'cmd'}, 'r'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   }
 }
 
@@ -198,5 +204,7 @@ keyEvents = {
   ctrlI          = function() return sendKey(getCombo('italic')) end,
   ctrlU          = function() return sendKey(getCombo('underline')) end,
 
-  ctrlW          = function() return sendKey(getCombo('close')) end
+  ctrlW          = function() return sendKey(getCombo('close')) end,
+
+  ctrlR          = function() return sendKey(getCombo('reload')) end
 }
