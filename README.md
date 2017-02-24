@@ -42,7 +42,7 @@ For keyboards with this layout, and a left hand mouser:
 
 |Main Area|Magic Happens|Ten Key Area
 | :-------------: | :-----------: | :---------------: |
-[~][F1]..........................[F12][Eject]...|...[PrtScr] [ScrLck] [P/Brk]...|...[F16][F17][F18][F19]
+[~][F1]..........................[F12][Eject]|[PrtScr] [ScrLck] [P/Brk]|[F16][F17][F18][F19]
 Main keys|[Ins][Home][Pg Up]|[Clr][Eq][Div][Mul]
 Main keys|[Del][End] [Pg Dn]|[7] [8] [9] [-]
 Main keys||[4] [5] [6] [+]
