@@ -39,12 +39,11 @@ I'm still learning a ton about keyboard events. Any wisdom is appreciated.
 ## Why all these maps?
 
 For keyboards with this layout, and a left hand mouser:
-```
-----------------------------------------------|----------------------------------------|----------------|
-               Function keys               |  [prt scr] [scroll lock] [pause/break] | 			          |
-                 Main keys		            |    [Ins]       [Home]       [Pg Up]    | 		    	      |
-                 Main keys		            |    [Del]       [Home]       [Pg Dn]    |     10 key 	  |
-                 Main keys		            | 			                  							 |			          |
-                 Main keys		            |                [Up]                    |  			        |
-[Ctrl] [Win] [Alt] [Space] [Alt] [Win] [Ctrl] |        [Left] [Down] [Right]           |			          |    
-```
+|Main Area|Magic Happens|Ten Key Area
+| :-------------: | :-----------: | :---------------: |
+[~][F1]..........................[F12][Eject]...|...[PrtScr] [ScrLck] [P/Brk]...|...[F16][F17][F18][F19]
+Main keys|[Ins][Home][Pg Up]|[Clr][Eq][Div][Mul]
+Main keys|[Del][End] [Pg Dn]|[7] [8] [9] [-]
+Main keys||[4] [5] [6] [+]
+Main keys|[Up]|[1] [2] [3] [Ent]
+[Ctrl] [Win] [Alt] [Space] [Alt] [Win] [Ctrl]  |  [Left] [Down] [Right]|[Zero][Dot][Ent]
