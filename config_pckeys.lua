@@ -57,28 +57,32 @@ menuPath = {
 
 combo = {
   cut = { -- No default key here will signal a menu command instead. See sendKeyOrMenu()
+    default = {{'cmd'}, 'x'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'X'}
+    VirtualBox_VM = {{'ctrl'}, 'x'}
   },
   copy = {
+    default = {{'cmd'}, 'c'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'C'}
+    VirtualBox_VM = {{'ctrl'}, 'c'}
   },
   paste = {
+    default = {{'cmd'}, 'v'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'V'}
+    VirtualBox_VM = {{'ctrl'}, 'v'}
+
   },
   save = {
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'S'}
+    VirtualBox_VM = {{'ctrl'}, 's'}
   },
   undo = {
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'Z'}
+    VirtualBox_VM = {{'ctrl'}, 'z'}
   },
   redo = {
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'Y'}
+    VirtualBox_VM = {{'ctrl'}, 'y'}
   },
 
   nextWord = {
@@ -110,7 +114,8 @@ combo = {
 
   beginLine = {
     default = {{'cmd'}, 'left'},
-    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   },
   selectBeginLine = {
     default = {{'cmd', 'shift'}, 'left'},
