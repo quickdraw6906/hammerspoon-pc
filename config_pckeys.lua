@@ -58,29 +58,32 @@ menuPath = {
 combo = {
   cut = { -- No default key here will signal a menu command instead. See sendKeyOrMenu()
     default = {{'cmd'}, 'x'},
-    Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'x'}
+    Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
+    VirtualBox_VM = {}
   },
   copy = {
     default = {{'cmd'}, 'c'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'c'}
+    VirtualBox_VM = {}
   },
   paste = {
     default = {{'cmd'}, 'v'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'v'}
+    VirtualBox_VM = {}
 
   },
   save = {
+    default = {{'cmd'}, 's'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 's'}
+    VirtualBox_VM = {}
   },
   undo = {
+    default = {{'cmd'}, 'z'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'z'}
+    VirtualBox_VM = {}
   },
   redo = {
+    default = {{'cmd'}, 'y'}, -- No always implemented by apps. Try removing to have a menu item attempted
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {{'ctrl'}, 'y'}
   },
@@ -109,7 +112,8 @@ combo = {
   },
   selectEndLine = {
     default = {{'cmd', 'shift'}, 'right'},
-    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   },
 
   beginLine = {
@@ -119,7 +123,8 @@ combo = {
   },
   selectBeginLine = {
     default = {{'cmd', 'shift'}, 'left'},
-    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   },
 
   docBegin = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block

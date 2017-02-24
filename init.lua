@@ -143,7 +143,7 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
   if data ~= 55555 then
 
     -- -------------------------------------------
-    -- NO MODIFIER COMBOS
+    -- NO MODIFIER STROKES/COMBOS
     -- -------------------------------------------
     if kc == 96 then -- F5 = reload
       return keyEvents.ctrlR()
@@ -295,7 +295,6 @@ ekKeyDownShuntCtrl = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function
   end
 end)
 
-
 -- -------------------------------------------------------------------------------------
 -- Trap keyUp
 -- -------------------------------------------------------------------------------------
@@ -342,37 +341,6 @@ hs.alert.show('Config loaded')
 --hs.hotkey.bind({'ctrl'}, 'Z', function() keyEvents.menuUndo() end)
 --hs.hotkey.bind({'ctrl'}, 'Y', function() keyEvents.menuRedo() end)
 --hs.hotkey.bind({'ctrl'}, 'A', function() keyEvents.selectAll() end)
-
--- -------------------------------------------------------------------------------------
--- Why all these maps?
--- -------------------------------------------------------------------------------------
---[[
-	For keyboards with this layout:
-		|	               Function keys                  | | [prt scr] [scroll lock] [pause/break] | | 			    |
-		|	                 Main keys		                | |   [Ins]       [Home]       [Pg Up]    | | 		    	|
-		|	                 Main keys		                | |   [Del]       [Home]       [Pg Dn]    | |  10 key 	|
-		|	                 Main keys		                | |			                  							  | |			      |
-		|	                 Main keys		                | |               [Up]                    | |  			    |
-		|  [Ctrl] [Win] [Alt] [Space] [Alt] [Win] [Ctrl]| |       [Left] [Down] [Right]           | |			      |
-
-	On a PC, in all but Adobe applications (which is a Mac First software house), cut/copy/paste operations can be
-	done with shift, control, insert and home keys:
-		shift+delete	=	cut
-		ctrl+insert		=	copy
-		shift+insert	=	paste
-
-	Using the left hand for the mouse allows max efficiency if control, shift, insert and delete keys used for
-	cut/copy/paste operations (Right hand movement is minimized).
-
-	Using right hand for mouse allows efficiency for cut/copy/past operations, but this is super-inefficent for
-	arrows and ten key work.
-
-	On a Mac, problems are compounded because the command key is directly under the X key, requiring either
-	a slight shift of the left hand to position for comand+x, contorted use of the thumb to strike the command key,
-	or a different finger striking the comand key than for command+c or command+v. The position of the command key
-	next to the space bar (directly under x,c,v) makes the use of the command key a poor choice for cut/copy/paste ops,
-	from the standpoint of wanting a conservation of motion when typing with wrists at rest.
-]]
 
 --[[
 

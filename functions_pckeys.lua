@@ -2,7 +2,18 @@
 -- Helper functions
 -- -------------------------------------------------------------------------------------
 
-function dump(var) print(hs.inspect(var)) end
+function dump(var, fAlert)
+  if type(var) == 'table' then
+    out = hs.inspect(var)
+  else
+    out = var
+  end
+  if fAlert then
+      hs.alert(out)
+  else
+    print(out)
+  end
+end
 
 function log(message)
   if DEBUG == true then print(message) end
