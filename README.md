@@ -38,12 +38,14 @@ I'm still learning a ton about keyboard events. Any wisdom is appreciated.
 
 ## Why all these maps?
 
-	For keyboards with this layout, and a left hand mouser:
-
---------------------------------------------------|----------------------------------------|
-		               Function keys                  |  [prt scr] [scroll lock] [pause/break] | 			    
-		                 Main keys		                |    [Ins]       [Home]       [Pg Up]    | 		    	
-		                 Main keys		                |    [Del]       [Home]       [Pg Dn]    |  10 key 	
-		                 Main keys		                | 			                  							 |			      
-		                 Main keys		                |                [Up]                    |  			    
-	  [Ctrl] [Win] [Alt] [Space] [Alt] [Win] [Ctrl] |        [Left] [Down] [Right]           |			      
+For keyboards with this layout, and a left hand mouser:
+```
+--------------------------------------------------|----------------------------------------|----------------|
+		               Function keys                  |  [prt scr] [scroll lock] [pause/break] | 			          |
+		                 Main keys		                |    [Ins]       [Home]       [Pg Up]    | 		    	      |
+		                 Main keys		                |    [Del]       [Home]       [Pg Dn]    |     10 key 	  |
+		                 Main keys		                | 			                  							 |			          |
+		                 Main keys		                |                [Up]                    |  			        |
+	  [Ctrl] [Win] [Alt] [Space] [Alt] [Win] [Ctrl] |        [Left] [Down] [Right]           |			          |
+------------------------------------------------------------------------------------------------------------		      
+```
