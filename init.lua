@@ -35,7 +35,7 @@ require 'actions'
 -- -------------------------------------------------------------------------------------
 -- Defines alernate actions for many Mac OS shortcuts.
 -- Create/Edit PC shortcuts to the action that gets performed on a PC
-require 'config_pckeys'
+require 'config'
 
 -- -------------------------------------------------------------------------------------
 -- Set up other shortcuts you want to be in play here
