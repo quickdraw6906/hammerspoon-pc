@@ -67,9 +67,6 @@ end
 
 -- Send keyDown and keyUp events for a combo.
 function sendKey(combo, finishOfSequence)
-hs.console.clearConsole()
-  dump(combo)
-
   -- If not passed a valid combo, just signal for the event to pass
   -- through to the OS (for apps that already behave like a PC (i.e., Microsoft Remote Desktop))
   if combo == nil or combo == false then return false end
