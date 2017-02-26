@@ -62,8 +62,8 @@ combo = {
   },
   pasteFn = { -- Used by ctrl+fn which can't pass that combo through to non-mac contexts
     default = {{'cmd'}, 'v'},
-    Microsoft_Remote_Desktop = {{'ctrl'}, 'p'},
-    VirtualBox_VM = {{'ctrl'}, 'p'}
+    Microsoft_Remote_Desktop = {{'ctrl'}, 'v'},
+    VirtualBox_VM = {{'ctrl'}, 'v'}
   },
   save = {
     default = {{'cmd'}, 's'},

@@ -1,4 +1,4 @@
-DEBUG = false
+DEBUG = true
 CLEAR_LOG_ON_HYPER_KEY = true
 EVENTPROPERTY_EVENTSOURCEUSERDATA = 42 -- print(hs.inspect(hs.eventtap.event.properties))
 -- For bindings that require canceling the current key event and spawing a new event with a delay
@@ -50,8 +50,8 @@ keyEvents = {
   end,
 
   ctrlFn         = function()
-                        ret = sendKey(getCombo('copy'))
-                          hs.timer.delayed.new(.5, function()
+                        ret = sendKey(getCombo('copyFn'))
+                        hs.timer.delayed.new(.5, function()
                         	log('Special copy. pasteboard=' .. hs.pasteboard.getContents())
                         end):start()
                         return ret
@@ -59,11 +59,12 @@ keyEvents = {
 
   shiftFn        = function()
                         ret = sendKey(getCombo('pasteFn'))
-                          hs.timer.delayed.new(.5, function()
+                        hs.timer.delayed.new(.5, function()
                           log('Special paste. pasteboard=' .. hs.pasteboard.getContents())
                         end):start()
                         return ret
   end,
+
   shiftFwdDelete = function()
                         --hs.alert(hs.application.frontmostApplication():name())
                         ret = sendKey(getCombo('cut'))
@@ -72,5 +73,4 @@ keyEvents = {
                         end):start()
                         return ret
   end
-
 }

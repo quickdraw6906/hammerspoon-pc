@@ -14,16 +14,41 @@ etFlags = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
   flags = e:getFlags()
   if flags.fn then
     if hs.eventtap.checkKeyboardModifiers().ctrl then -- Ctrl + Fn is same position physically as Ctrl + Insert on PC keyboard
-
-      keyEvents.ctrlFn()
+      return keyEvents.ctrlFn()
     end
     if hs.eventtap.checkKeyboardModifiers().shift then -- Shift + Fn is same position physically as Shift + Insert on a PC keyboard
-      keyEvents.shiftFn()
+      return keyEvents.shiftFn()
     end
   end
+
+  --- Clear the console on hyperkey (only cmd+alt+ctrl)
   if flags.cmd and flags.ctrl and flags.alt and CLEAR_LOG_ON_HYPER_KEY then
-    hs.console.clearConsole()
+    hs.timer.delayed.new(.3, function()
+      hs.console.clearConsole()
+    end):start()
   end
 
 end)
 etFlags:start()
+
+--[[
+etFlagsTest = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
+  flags = e:getFlags()
+  key = 'c'
+  if next(flags) ~= nil then
+    log('++++++++++++++++++++++++++++++++++++++++++++++++')
+    log('flagsChanged event flags=' .. hs.inspect(flags) .. ';keycode=' .. e:getKeyCode())
+  end
+  if flags.fn and (flags.shift or flags.ctrl) then
+    if flags.shift then key = 'v' end
+    evKey = hs.eventtap.event.newKeyEvent({'ctrl'}, key, true)
+     -- Shunt other eventtaps
+    evKey:setProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA, 55555)
+    log('================================================')
+    dump(evKey:getFlags())
+    evKey:post()
+    hs.timer.usleep(1000)
+    hs.eventtap.event.newKeyEvent({'ctrl'}, key, false):setProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA, 55556):post()
+  end
+end):start()
+]]
