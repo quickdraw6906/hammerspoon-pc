@@ -6,7 +6,7 @@ This is a labor of love for a left hand mouser who needs a ten key and therefore
 ## Principles
 IMO: Apple created, still creates*, and forces other app developers to create huge piles of technical debt (tied with Windoz? More?) by not providing having common keyboard services that apps get by default. I'm not all hip on all the low level issues, but something isn't right about how keyboard events are handled.
 
-Woah to left hand people. Besids poor mouse choices on the market, Mac folks have the curse of right only cut/copy/paste on keyboard.
+Woah to left hand people. Besides poor mouse choices on the market, Mac folks have the curse of right only cut/copy/paste on keyboard.
 
 PC folks making their way to the mac have to contend with a huge divide in keyboard conventions.
 
@@ -14,14 +14,14 @@ Selecting whole words with the keyboard is more natural when the modifier for su
 
 IT professionals who need to administer PC's remotely and use alternate OS's need to run virtualization software and remote control software. That's a big problem from a Mac. The keyboard event model and just plain wierd shortcut choices just doesn't translate well. Try moving ten lines of anything one line at a time from an Windoz VM to a file in Atom. Talk about brain/key gymnastics. Ditto with the Mac native app Microsoft Remote Desktop.
 
-Add all that up and Left hand mouse keyboard wizards coming from decades of PC use (with dimishing brain plasticity) using Mac OS 10.12 (Sierra)...are pretty much screwed. These scripts are an attempt to ease the transition**
+Add all that up and Left hand mouse keyboard wizards coming from decades of PC use (with diminishing brain plasticity) using Mac OS 10.12 (Sierra)...are pretty much screwed. These scripts are an attempt to ease the transition**
 
 \* Hello Karabiner Elements as a reaction to issues with keyboard Sierra hell for us GTD folks.
 
 ** Also a hope is to forestall arthritis by having to do the contortions the Mac keyboard layout cause.
 
 ## Pasteboard, Right Hand?
-There is only one "real" keyboard layout for max efficiency. Mac has such a layout but where on a PC there is an insert key, the mac has a function key. So to get x/c/p on the right hand consistenct with the standard shortcuts (can I say that in Mac land? STANDARD!) c/x/p keys of ctrl+insert, shift+del (forward delete to those in mac land), and shift+insert
+There is only one "real" keyboard layout for max efficiency. Mac has such a layout but where on a PC there is an insert key, the mac has a function key. So to get x/c/p on the right hand consistent with the standard shortcuts (can I say that in Mac land? STANDARD!) c/x/p keys of ctrl+insert, shift+del (forward delete to those in mac land), and shift+insert
 
 ## Open Issues
 Paste from shift+fn not working in VirtualBox.
