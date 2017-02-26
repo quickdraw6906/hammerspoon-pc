@@ -1,3 +1,5 @@
+-- See README for known issues!
+
 -- -------------------------------------------------------------------------------------
 -- Goals:
 --
@@ -19,26 +21,25 @@ hs.hints.showTitleThresh = 0
 hs.window.animationDuration = 0
 
 require '3rdparty'
-require 'config_pckeys'
 require 'functions'
 require 'screen_grab'
 require 'taps_flagsChanged'
 require 'taps_keyDown'
 require 'taps_keyUp'
 
+-- -------------------------------------------------------------------------------------
 -- Key combo user enters replaced with a different combo- per application
--- Define/Edit shortcuts for a each application context (incl. default shotcut for all contexts)
+-- Define/Edit shortcuts to emit for an action in a application (includes defining a catch-all action)
 require 'actions'
 
--- Set up your shortcuts here
-require 'bindings'
-
--- See README for known issues!
+-- -------------------------------------------------------------------------------------
+-- Defines alernate actions for many Mac OS shortcuts.
+-- Create/Edit PC shortcuts to the action that gets performed on a PC
+require 'config_pckeys'
 
 -- -------------------------------------------------------------------------------------
--- Add your own here (or require a Lua file (in this directory) or your own)
-
-
+-- Set up other shortcuts you want to be in play here
+require 'bindings'
 
 -- -------------------------------------------------------------------------------------
 

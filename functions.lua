@@ -1,7 +1,4 @@
 function dump(var, fAlert)
-  if DEBUG ~= true then
-    return
-  end
   if type(var) == 'table' then
     out = 'DUMP: '  .. hs.inspect(var)
   else

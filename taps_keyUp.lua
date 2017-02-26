@@ -5,7 +5,7 @@
 -- This eventtap is set by binding scripts that need to block other keyboard events the
 -- user or the OS generates while script is executing
 etKeyUp = hs.eventtap.new({hs.eventtap.event.types.keyUp}, function (e)
-  --log('keyUp event: keycode=' .. tostring(e:getKeyCode()) .. '; userdata=' .. tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA)) .. "; semaphore=" ..  tostring(semaphore) .. '; flags=' .. hs.inspect(e:getFlags()))
+  log('keyUp event: keycode=' .. tostring(e:getKeyCode()) .. '; userdata=' .. tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA)) .. "; semaphore=" ..  tostring(semaphore) .. '; flags=' .. hs.inspect(e:getFlags()))
 
   -- If a scripted action needed to block other keyboard events, then look
   -- for a key up event from the last event in the scripted chain of events

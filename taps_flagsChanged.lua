@@ -9,7 +9,7 @@
 -- Note: by trapping flag changes, with no actual event to shunt, any key events created here will prop to the OS of VM and RDP
 -- windows (VitualBox and Microsoft Remote Desktop). So, these shortcuts won't work in those contexts
 etFlags = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
-  -- log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
+  log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
   flags = e:getFlags()
   if flags.fn then
     if hs.eventtap.checkKeyboardModifiers().ctrl then -- Ctrl + Fn is same position physically as Ctrl + Insert on PC keyboard
