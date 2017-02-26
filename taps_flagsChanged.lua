@@ -6,10 +6,11 @@
 
 -- Have to trap flagsChanged event instead of keyDown because holding only modifier keys doesn't trigger a keyDown event on Macs
 
--- Note: by trapping flag changes, with no actual event to shunt, any key events created here will prop to the OS of VM and RDP
--- windows (VitualBox and Microsoft Remote Desktop). So, these shortcuts won't work in those contexts
+-- Note: by trapping flag changes, with no actual event to shunt.
+-- Any key events created here will NOT propagate from the OS of VM and RDP (I'm still working on this)
+-- through VitualBox and Microsoft Remote Desktop.
 etFlags = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
-  log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
+  --log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
   flags = e:getFlags()
   if flags.fn then
     if hs.eventtap.checkKeyboardModifiers().ctrl then -- Ctrl + Fn is same position physically as Ctrl + Insert on PC keyboard

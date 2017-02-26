@@ -36,7 +36,6 @@ keyEvents = {
   ctrlS          = function()  return sendKeyOrMenu('save') end,
   ctrlZ          = function()  return sendKeyOrMenu('undo') end,
   ctrlY          = function()  return sendKeyOrMenu('redo') end,
-  shiftFn        = function()  return sendKey(getCombo('pasteFn')) end,
 
   -- Thse are being monitored special because of issue where taps (keyDown) are inexplicably stopping
   -- Goal: Store eventtaps as variables, if I find taps are not trapping events, hit a shortcut to log
@@ -58,6 +57,13 @@ keyEvents = {
                         return ret
   end,
 
+  shiftFn        = function()
+                        ret = sendKey(getCombo('pasteFn'))
+                          hs.timer.delayed.new(.5, function()
+                          log('Special paste. pasteboard=' .. hs.pasteboard.getContents())
+                        end):start()
+                        return ret
+  end,
   shiftFwdDelete = function()
                         --hs.alert(hs.application.frontmostApplication():name())
                         ret = sendKey(getCombo('cut'))
