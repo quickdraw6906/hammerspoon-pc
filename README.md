@@ -24,22 +24,16 @@ Add all that up and Left hand mouse keyboard wizards coming from decades of PC u
 There is only one "real" keyboard layout for max efficiency. Mac has such a layout but where on a PC there is an insert key, the mac has a function key. So to get x/c/p on the right hand consistenct with the standard shortcuts (can I say that in Mac land? STANDARD!) c/x/p keys of ctrl+insert, shift+del (forward delete to those in mac land), and shift+insert
 
 ## Open Issues
-Select word (next/previous) is buggy. There event issues on repeat strokes. You end up switching desktops. I tried to go as low level as possible, but some events fall through to the OS.
-
-x/c/p right hand functions (ctrl+fn, shift+fn, shift+forwarddelete not working in VirtualBox yet.
-
-No x/c/p functions work in MinTTY on Windoz (VM)
-
-A screen grab function could not be done totally gracefully because from th Grab app Hammerspoon couldn't load the image in the pasteboard into a variable. Something to research...
+Paste from shift+fn not working in VirtualBox.
+Copy from ctrl+fn now working in Microsoft Remote Desktop.
+No x/c/p functions work in MinTTY (bash emulator for git) on Windoz (VM)
 
 I keep having the situation where Hammerspoon loses all eventtaps. I have to reload the config periodically. Would love some insights into that. I might have to schedule a reload on a timer every 30 seconds or so (yuck).
 
 ## Work in Progress
 I'm still learning a ton about keyboard events. Any wisdom is appreciated.
 
-
 ## Why all these maps?
-
 For keyboards with this layout, and a left hand mouser:
 
 |Main Area|Magic Happens|Ten Key Area
