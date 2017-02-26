@@ -34,6 +34,7 @@ straight keystroke/combo sent unaltered.
 ]]
 
 
+-- Any apps that should get sent the typed shortcut unaltered (not the default) should have an entry for that shortcut
 combo = {
   find = {
     default = {{'cmd'}, 'f'},
@@ -102,6 +103,7 @@ combo = {
   endLine = {
     default = {{'cmd'}, 'right'},
     Terminal = {'ctrl', 'e'},
+    VirtualBox_VM = {},
     Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
   },
   selectEndLine = {
