@@ -24,15 +24,16 @@ keyEvents = {
   shiftEnd       = function()  return sendKey(getCombo('selectEndLine')) end,
   ctrlEnd        = function(e) return sendKey(getCombo('docEnd')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
   ctrlShiftEnd   = function(e) return sendKey(getCombo('selectDocEnd')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
-  find           = function()  return sendKey(getCombo('find')) end,
+  ctrlF          = function()  return sendKey(getCombo('find')) end,
   ctrlX          = function()  return sendKeyOrMenu('cut') end,
   ctrlA          = function()  return sendKeyOrMenu('selectAll') end,
   ctrlB          = function()  return sendKey(getCombo('bold')) end,
   ctrlI          = function()  return sendKey(getCombo('italic')) end,
   ctrlU          = function()  return sendKey(getCombo('underline')) end,
+  ctrlO          = function()  return sendKey(getCombo('open')) end,
   ctrlW          = function()  return sendKey(getCombo('close')) end,
   ctrlR          = function()  return sendKey(getCombo('reload')) end,
-  ctrlP          = function()  return sendKeyOrMenu('paste') end,
+  ctrlV          = function()  return sendKeyOrMenu('paste') end,
   ctrlS          = function()  return sendKeyOrMenu('save') end,
   ctrlZ          = function()  return sendKeyOrMenu('undo') end,
   ctrlY          = function()  return sendKeyOrMenu('redo') end,
@@ -73,4 +74,52 @@ keyEvents = {
                         end):start()
                         return ret
   end
+
+}
+
+keyFuncs = {
+  noMods = {
+    [96] = keyEvents.ctrlR,
+    [115] = keyEvents.home,
+    [119] = keyEvents.endKey
+  },
+  ctrlMods = {
+    [0] = keyEvents.ctrlA,
+    [1] = keyEvents.ctrlS,
+    [3] = keyEvents.ctrlF,
+    [6] = keyEvents.ctrlZ,
+    [7] = keyEvents.ctrlX,
+    [8] = keyEvents.ctrlC,
+    [9] = keyEvents.ctrlV,
+    [11] = keyEvents.ctrlB,
+    [13] = keyEvents.ctrlW,
+    [15] = keyEvents.ctrlR, -- F5
+    [16] = keyEvents.ctrlY,
+    [32] = keyEvents.ctrlU,
+    [34] = keyEvents.ctrlI,
+    [115] = keyEvents.ctrlHome,
+    [119] = keyEvents.ctrlEnd,
+    [123] = keyEvents.ctrlRight,
+    [124] = keyEvents.ctrlLeft
+  },
+  shiftMods = {
+    [115] = keyEvents.shiftHome,
+    [117] = keyEvents.shiftFwdDelete,
+    [119] = keyEvents.shiftEnd
+  },
+  ctrlShiftMods = {
+    [115] = keyEvents.ctrlShiftHome,
+    [119] = keyEvents.ctrlShiftEnd,
+    [123] = keyEvents.ctrlShiftRight,
+    [124] = keyEvents.ctrlShiftLeft
+  },
+  cmdMods = {
+    -- For future fun with Microsoft Remote Desktop and VirtualBox
+    -- On those apps, controling a Windoz machine|VM, command is the
+    -- host key (Windows key).
+
+    -- Also here would go any function mappings you want for Shortcuts
+    -- where you want to map a command+key to something besides its
+    -- native action.
+  }
 }

@@ -1,9 +1,5 @@
 function dump(var, fAlert)
-  if type(var) == 'table' then
-    out = 'DUMP: '  .. hs.inspect(var)
-  else
-    out = 'DUMP: '  .. var
-  end
+  out = 'DUMP: '  .. hs.inspect(var)
   if fAlert then
       hs.alert(out)
   else

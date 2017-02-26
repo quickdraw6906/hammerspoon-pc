@@ -43,4 +43,4 @@ require 'bindings'
 
 -- -------------------------------------------------------------------------------------
 
-hs.alert.show('Config loaded')
+hs.alert.show('Config loaded with console alpha level ' .. hs.console.alpha())

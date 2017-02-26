@@ -144,11 +144,22 @@ combo = {
     VirtualBox_VM = {}
   },
 
+  open = {
+    default = {{'cmd'}, 'o'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
+  },
+  new = {
+    default = {{'cmd'}, 'n'},
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
+  },
   close = {
     default = {{'cmd'}, 'w'},
-    Microsoft_Remote_Desktop = {{'ctrl'}, 'w'}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
-    VirtualBox_VM = {{'ctrl'}, 'w'}
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   },
+
   selectAll = {
     --default = {{'cmd'}, 'a'}, -- Deprecated. For an unknown reason, cmd+a would not send! Since no default here, sendKeyOrMenu() will look to send a menu command instead
     Terminal = {'ctrl', 'a'},
