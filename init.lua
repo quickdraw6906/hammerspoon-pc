@@ -1,310 +1,45 @@
 -- -------------------------------------------------------------------------------------
 -- Goals:
+--
+-- GTD = Extension of Getting Things Done (trying to get organized)
+--        (http://lifehacker.com/productivity-101-a-primer-to-the-getting-things-done-1551880955)
+--
 -- Augment cut/copy/paste functions with shortcuts that are more efficient
 -- Launch favorite browser with hyper+space (or bring forward already open window)
+-- Open a new terminal window
 -- Allow paste into password fields that block paste operation
--- Use PC shortcut behavior including inside the Microsoft Remote Desktop (RDP) app (cut/copy/paste, cursor movement)
+-- Use PC shortcut behavior including inside the Microsoft Remote Desktop (RDP) app (cut/copy/paste, cursor movement) (a work in progress)
 -- Add a convenient function to lock the Mac, displaying the user menu without sleeping first
+-- GTD: Open a Grab selection session and copy the result to the clipboard
 -- -------------------------------------------------------------------------------------
 hs.console.clearConsole()
-require 'functions_pckeys'
-require 'config_pckeys'
+
+hs.hotkey.alertDuration=0
+hs.hints.showTitleThresh = 0
+hs.window.animationDuration = 0
+
 require '3rdparty'
+require 'config_pckeys'
+require 'functions'
 require 'screen_grab'
+require 'taps_flagsChanged'
+require 'taps_keyDown'
+require 'taps_keyUp'
+
+-- Key combo user enters replaced with a different combo- per application
+-- Define/Edit shortcuts for a each application context (incl. default shotcut for all contexts)
+require 'actions'
+
+-- Set up your shortcuts here
+require 'bindings'
+
+-- See README for known issues!
 
 -- -------------------------------------------------------------------------------------
--- General
--- -------------------------------------------------------------------------------------
--- Hotkey binding only works for mac only stuf. Don't use for things you hope to have happen
--- on a VM or remote desktop session
+-- Add your own here (or require a Lua file (in this directory) or your own)
 
--- Force paste - sometimes cmd + v is blocked by some apps (herky jerks) so can't paste password from password manager
-hs.hotkey.bind({'cmd', 'shift'}, 'V', function() hs.eventtap.keyStrokes(hs.pasteboard.getContents()) end)
-
--- Lock the screen (don't sleep, show select-user/sign-in page)
-hs.hotkey.bind({'alt', 'ctrl'}, 'L', function() hs.caffeinate.lockScreen() end)
-
--- Tools for writing Hammerspoon script
-hs.hotkey.bind({'cmd', 'shift'}, 'R', function() hs.reload() end)
-hs.hotkey.bind({'cmd', 'shift'}, 'C', function() hs.console.clearConsole() end)
-hs.hotkey.bind({'alt'}, 'A', function() hs.alert(hs.application.frontmostApplication():name()) end)
-hs.hotkey.bind({'alt'}, 'B', function() hs.alert(hs.application.frontmostApplication():bundleID()) end)
-
--- -------------------------------------------------------------------------------------
--- Trap flagsChanged
--- -------------------------------------------------------------------------------------
--- Map keys for cut/copy/paste that are in the same physical location on the keyboard as a PC keyboard (for the right hand)
--- That is, make ctrl+fn, shift+fn do stuff (shift+forwarddelete is handled in the keyDown event tap below)
-
--- Have to trap flagsChanged event instead of keyDown because holding only modifier keys doesn't trigger a keyDown event on Macs
-
--- Note: by trapping flag changes, with no actual event to shunt, any key events created here will prop to the OS of VM and RDP
--- windows (VitualBox and Microsoft Remote Desktop). So, these shortcuts won't work in those contexts
-hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
-  -- log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
-  flags = e:getFlags()
-  if flags.fn then
-    if hs.eventtap.checkKeyboardModifiers().ctrl then -- Ctrl + Fn is same position physically as Ctrl + Insert on PC keyboard
-
-      keyEvents.ctrlFn()
-    end
-    if hs.eventtap.checkKeyboardModifiers().shift then -- Shift + Fn is same position physically as Shift + Insert on a PC keyboard
-      keyEvents.shiftFn()
-    end
-  end
-  if flags.cmd and flags.ctrl and flags.alt and CLEAR_LOG_ON_HYPER_KEY then
-    hs.console.clearConsole()
-  end
-
-end):start()
-
--- -------------------------------------------------------------------------------------
--- Trap keyDown
--- -------------------------------------------------------------------------------------
-etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
-  local cancel = false
-
-  local kc = e:getKeyCode() -- Key user pressed
-  local flags = hs.eventtap.checkKeyboardModifiers() -- Modifier keys user was pressing
-  local data = e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA)
-
-  log('keyDown event: keycode=' .. tostring(kc) .. '; userdata=' .. tostring(data) .. '; semaphore=' ..  tostring(semaphore) .. '; flags=' .. hs.inspect(e:getFlags()))
-
-  -- Only do if not an event generated by another script (which sets
-  -- the userdata of the event to distinguish itself from user/OS key events)
-  -- See getKeyEvent()
-  if data ~= 55555 then
-
-    -- -------------------------------------------
-    -- NO MODIFIER STROKES/COMBOS
-    -- -------------------------------------------
-    if kc == 96 then -- F5 = reload
-      return keyEvents.ctrlR()
-    end
-
-    -- -------------------------------------------
-    -- CTRL COMBOS
-    -- -------------------------------------------
-    if flags.ctrl then
-
-      if semaphore == 1 then
-        log('Semaphore set. Skipping event for keycode ' .. tostring(e:getKeyCode()))
-        return true
-      end
-
-      if kc == 0 then -- A = select all
-        return keyEvents.ctrlA()
-      end
-
-      if kc == 1 then -- S = save
-        return keyEvents.ctrlS()
-      end
-
-      if kc == 3 then -- S = save
-        return keyEvents.find()
-      end
-
-      if kc == 6 then -- Z = undo
-        return keyEvents.ctrlZ()
-      end
-
-      if kc == 7 then -- X = cut
-        return keyEvents.ctrlX()
-      end
-
-      if kc == 8 then -- C = copy
-        return keyEvents.ctrlC()
-      end
-
-      if kc == 9 then -- V = paste
-        return keyEvents.ctrlP()
-      end
-
-      if kc == 11 then -- B = bold
-        return keyEvents.ctrlB()
-      end
-
-      if kc == 13 then -- W = close
-        return keyEvents.ctrlW()
-      end
-
-      if kc == 15 then -- R = reload
-        return keyEvents.ctrlR()
-      end
-
-      if kc == 16 then -- Y = redo
-        return keyEvents.ctrlY()
-      end
-
-      if kc == 32 then -- U = underline
-        return keyEvents.ctrlU()
-      end
-
-      if kc == 34 then -- I = italics
-        return keyEvents.ctrlI()
-      end
-
-      -- If ctrl+home pressed, strip off ctrl and send home Flip what mac does with what pc does)
-      if kc == 115 then -- Home = home (strip ctrl flag)
-        if flags.shift then
-          log('here')
-          return keyEvents.ctrlShiftHome() -- Pass through keycode sans modifiers for mac context
-        else
-          return keyEvents.ctrlHome()
-        end
-      end
-
-      if kc == 119 then -- End = end (strip ctrl flag)
-        if flags.shift then
-          return keyEvents.ctrlShiftEnd() -- Pass through keycode sans modifiers for mac context
-        else
-          return keyEvents.ctrlEnd()
-        end
-      end
-      -- Warning: Overrides control+arrows for navigating desktops
-      -- This doesn't quite work right yet. If you repeat too fast the OS will get
-      -- the event and you will switch desktops if you have multiple open. Sigh.
-      -- This is an attempt to map control+arrows to option+arrows to "select to beginning
-      -- of next word" like on a PC.
-      -- Running into issues with rapid repeat (and auto repeat for that matter). The
-      -- sequencing is tricky. Will probably take a queue mechanism to store all repeats for
-      -- sequential playback, with shunting of other mapping operations and cancelling events
-      -- at the OS level to make it all work. Very tricky business. Sigh.
-      if kc == 124 then -- right arrow
-        if flags.shift then
-          log('Ctrl Shift Left arrow')
-          return keyEvents.ctrlShiftLeft()
-        else
-          log('Ctrl Right arrow')
-          return keyEvents.ctrlLeft()
-        end
-      end
-      if kc == 123 then -- right arrow
-        if flags.shift then
-          log('Ctrl Shift Right arrow')
-          return keyEvents.ctrlShiftRight()
-        else
-          log('Ctrl Right arrow')
-          return keyEvents.ctrlRight()
-        end
-      end
-
-    else
-      -- -------------------------------------------
-      -- SHIFT COMBOS
-      -- -------------------------------------------
-      if flags.shift then
-
-        -- If ctrl+home|end pressed, strip off ctrl and send home|end Flip what mac does with what pc does)
-        if kc == 115 then -- Home = home (strip ctrl flag)
-          return keyEvents.shiftHome() -- Pass through keycode sans modifiers for mac context
-        end
-
-        if kc == 117 then -- forwarddelete = cut
-          keyEvents.shiftFwdDelete()
-          return true
-        end
-
-        if kc == 119 then -- End = end (strip ctrl flag)
-          return keyEvents.shiftEnd() -- Pass through keycode sans modifiers for mac context
-        end
-      end
-    end -- if flags.ctrl then
-  end -- if data ~= 55555 then
-  -- Cancel event or app will do what a normal key press doesfff
-  return cancel
-
-end)
-etKeyDown:start()
-
--- -------------------------------------------------------------------------------------
--- Cancel any other keyboard events while another binding action (script) is working
-ekKeyDownShuntCtrl = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
-  --print('keyDown (shunt) event userdata=' .. tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA)) .. "; Semaphore=" ..  tostring(semaphore))
-  if e:getFlags().ctrl == true
-      and e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) < 55555
-      and semaphore == 1 then
-    print('Shunting ctrl event')
-    return true
-  end
-end)
-
--- -------------------------------------------------------------------------------------
--- Trap keyUp
--- -------------------------------------------------------------------------------------
--- This eventtap is set by binding scripts that need to block other keyboard events the
--- user or the OS generates while script is executing
-etKeyUp = hs.eventtap.new({hs.eventtap.event.types.keyUp}, function (e)
-  --log('keyUp event: keycode=' .. tostring(e:getKeyCode()) .. '; userdata=' .. tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA)) .. "; semaphore=" ..  tostring(semaphore) .. '; flags=' .. hs.inspect(e:getFlags()))
-
-  -- If a scripted action needed to block other keyboard events, then look
-  -- for a key up event from the last event in the scripted chain of events
-  -- and disable the event shunt eventtap and this eventtap
-  if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == 55556 then
-    --log('Disabling shunt')
-    ekKeyDownShuntCtrl:stop()
-    etKeyUp:stop()
-  end
-end)
-
-
--- Doesn't work, issue created
-hs.application.watcher.new(
-  function(name, type, app)
-    if app == 'Hammerspoon' and type == hs.application.watcher.activated then
-      hs.console.clearConsole()
-    end
-  end
-):start()
 
 
 -- -------------------------------------------------------------------------------------
+
 hs.alert.show('Config loaded')
-
-
--- All these didn't work because it appears the OS is capturing the event and not passing onto Hammerspoon (on to apps)
--- key = hs.eventtap.keyStroke
---hs.hotkey.bind({'ctrl'}, 'right', function() key({'alt'}, 'right') end) -- Move to beginning of previous word
---hs.hotkey.bind({'ctrl'}, 'left', function() key({'alt'}, 'left') end) -- Move to end of next word
---hs.hotkey.bind({'ctrl', 'shift'}, 'right', function() key({'alt', 'shift'}, 'right') end) -- Select to beginning of previous word
---hs.hotkey.bind({'ctrl', 'shift'}, 'left', function() key({'alt', 'shift'}, 'left') end)  -- Select to end of next word
---hs.hotkey.bind({'shift'}, 'forwarddelete', function() selectMenuItem(cut) end) -- PC keyboard old stand-by
-
--- hotkey.bind just doesn't work across non-apple contexts (VirtualBox, Microsoft Remote Desktop)
--- so you have to handle them manually in an event tap (see below)
---hs.hotkey.bind({'shift'}, 'home', function() keyEvents.shiftHome() end)-- Select to begining of line
---hs.hotkey.bind({'shift'}, 'end', function() keyEvents.shiftEnd() end) -- Select to end of line
---hs.hotkey.bind({'ctrl'}, 'home', function() keyEvents.ctrltHome() end)-- Select to begining of line
---hs.hotkey.bind({'ctrl'}, 'end', function() keyEvents.ctrlEnd() end) -- Select to end of line
---hs.hotkey.bind({'ctrl'}, 'C', function() keyEvents.menuCopy() end)
---hs.hotkey.bind({'ctrl'}, 'X', function() keyEvents.menuCut() end)
---hotkey.bind({'shift'}, 'forwarddelete', function() keyEvents.menuCut() end)
---hs.hotkey.bind({'ctrl'}, 'V', function() keyEvents.menuPaste() end)
---hs.hotkey.bind({'ctrl'}, 'S', function() keyEvents.menuSave() end)
---hs.hotkey.bind({'ctrl'}, 'Z', function() keyEvents.menuUndo() end)
---hs.hotkey.bind({'ctrl'}, 'Y', function() keyEvents.menuRedo() end)
---hs.hotkey.bind({'ctrl'}, 'A', function() keyEvents.selectAll() end)
-
---[[
-
--- For future fun
--- Source: https://gist.github.com/auser/d4924fbe08e6ea2ac68b
-function applicationRunning(name)
-  apps = application.runningApplications()
-  found = false
-  for i = 1, #apps do
-    app = apps[i]
-    if app:title() == name and (#app:allWindows() > 0 or app:mainWindow()) then
-      found = true
-    end
-  end
-  return found
-end
-
--- -------------------------------------------------------------------------------------
-MORE TO CONSIDER:
-
-Great examples of script that always opens app on a certain monitor
-https://github.com/rtoshiro/hammerspoon-init/blob/master/init.lua
-
-]]

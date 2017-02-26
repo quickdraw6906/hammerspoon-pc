@@ -11,7 +11,8 @@ timerNum = 0
 checkForCaptureTimer = nil
 GRABBUNDLEID = 'com.apple.Grab'
 capturedImage = nil
-hs.hotkey.bind({'alt'}, 'G', function()
+
+function startNewGrabThenCopy()
   -- Stop any previous timer checking for a Grab window
   if checkForCaptureTimer ~= nil then
     checkForCaptureTimer:stop()
@@ -58,4 +59,4 @@ hs.hotkey.bind({'alt'}, 'G', function()
       grabApp:selectMenuItem({'Edit', 'Copy'})
       hs.alert('Selection copied')
     end)
-end)
+end
