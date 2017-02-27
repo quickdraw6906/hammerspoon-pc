@@ -34,9 +34,10 @@ keyEvents = {
   ctrlW          = function()  return sendKey(getCombo('close')) end,
   ctrlR          = function()  return sendKey(getCombo('reload')) end,
   ctrlV          = function()  return sendKeyOrMenu('paste') end,
+  ctrlN          = function()  return sendKeyOrMenu('new') end,
   ctrlS          = function()  return sendKeyOrMenu('save') end,
-  ctrlZ          = function()  return sendKey('undo') end,
   ctrlY          = function()  return sendKeyOrMenu('redo') end,
+  ctrlZ          = function()  return sendKey(getCombo('undo')) end,
 
   -- Thse are being monitored special because of issue where taps (keyDown) are inexplicably stopping
   -- Goal: Store eventtaps as variables, if I find taps are not trapping events, hit a shortcut to log
@@ -97,6 +98,7 @@ keyFuncs = {
     [16] = keyEvents.ctrlY,
     [32] = keyEvents.ctrlU,
     [34] = keyEvents.ctrlI,
+    [45] = keyEvents.ctrlN,
     [115] = keyEvents.ctrlHome,
     [119] = keyEvents.ctrlEnd,
     [123] = keyEvents.ctrlRight,

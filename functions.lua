@@ -22,7 +22,7 @@ function execKeyFunction(mods, kc, triggeringEvent)
     log('No key function for ' .. mods .. '+' .. tostring(kc))
     return false -- Pass original key event through
   end
-  log('RETURNING TO OS: ' .. tostring(ret))
+  log('SHUNT ORIGINAL EVENT: ' .. tostring(ret))
   return ret
 end
 
@@ -37,7 +37,7 @@ function sendKey(combo, finishOfSequence)
   local key = combo[2]
   if key == nil then return false end -- No combo for current app, just send event as is
 
-  log('Sending key: ' .. key .. ' with modifiers: ' .. hs.inspect(modifiers))
+  log('SENDING KEY: ' .. key .. ' w/ mods: ' .. hs.inspect(modifiers))
 
   -- keyDown event
   hs.timer.delayed.new(.005, function()
@@ -84,7 +84,7 @@ function getCombo(strCombo)
     keyCombo = comboNode['default']
   end
   if keyCombo == nil then
-    --log('No default combo for ' .. strCombo )
+    log('No defined or default combo for ' .. strCombo )
     return {} -- No valid combo in table. Pass through event to OS.
   end
   return keyCombo
@@ -95,7 +95,7 @@ end
 function getMenuPath(strMenuName)
   -- Look up combo from combo table
   local app = string.gsub(hs.application.frontmostApplication():name(), ' ', '_')
-  log('Getting menu path ' .. strMenuName .. ' with subkey ' .. app)
+  log('Getting menu path ' .. strMenuName .. ' for app ' .. app)
   local menuNode = menuPath[strMenuName]
   if menuNode == nil then return {} end
   local menuPth = menuNode[app]
@@ -104,6 +104,7 @@ function getMenuPath(strMenuName)
     menuPth = menuNode['default']
   end
   if next(menuPth) == nil then
+    log('No menu item found with path')
     return {} -- No valid combo in table. Pass through event to OS.
   end
   return menuPth
@@ -115,19 +116,16 @@ end
 -- See functions_pckeys.lua to determine which approach will be used for a certain app
 function sendKeyOrMenu(operation)
   -- First look to see if there is a combo defined for pasteboard opp and/or app
-  log('Sending operation: ' .. operation)
   local combo = getCombo(operation)
 
   if next(combo) ~= nil then
       -- Key combo found, returning that
-      log('Sending combo ' .. hs.inspect(combo))
       return sendKey(combo, true)
   end
-  log('No combo found.')
+  log('Looking for menu...')
   -- No combo found. Look for menu path
   local menuPth = getMenuPath(operation)
   if next(menuPth) == nill then
-    log('Passing event through.')
     return false
   end -- No menu found, pass event onto OS unaltered
   log('Activating menu path ' .. hs.inspect(menuPth))
