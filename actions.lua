@@ -229,6 +229,11 @@ menuPath = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
+  rename = {
+    Finder = {'File', 'Rename'},
+    Microsoft_Remote_Desktop = {},
+    VirtualBox_VM = {}
+  },
   selectAll = {
     default = {'Edit', 'Select All'},
     TextMate = {'Edit', 'Select', 'All'},

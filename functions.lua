@@ -1,5 +1,5 @@
 function dump(var, fAlert)
-  out = 'DUMP: '  .. hs.inspect(var)
+  local out = 'DUMP: '  .. hs.inspect(var)
   if fAlert then
       hs.alert(out)
   else
@@ -11,17 +11,43 @@ function log(message)
   if DEBUG == true then print(message) end
 end
 
+-- Way to minimize having to reload all the time when a function barfs (thus locking up the keyboard)
+function flipSkipToggle()
+  if skipToggle == false or skipToggle == nil then
+    skipToggle = true
+    hs.alert('Skip on')
+  else
+    skipToggle = false
+    hs.alert('Skip off')
+  end
+end
+
 function execKeyFunction(mods, kc, triggeringEvent)
   local keyFunction = nil
+  local ret = false
   if mods == 'nil' then return false end
 
   log('EXECKEYFUNCTION mods=' .. mods .. '; kc=' .. tostring(kc) .. '; flags=' .. hs.inspect(triggeringEvent:getFlags()))
 
-  ret = false
-  if not pcall(function() ret = keyFuncs[mods][kc]() end) then
-    log('No key function for ' .. mods .. '+' .. tostring(kc))
-    return false -- Pass original key event through
+  varType = type(keyFuncs[mods][kc])
+  --dump(varType)
+  if varType == 'function' then
+    keyFunction = keyFuncs[mods][kc]
+  else
+    log('No keyfunc for ' .. mods .. '+' .. tostring(kc) .. '. Original event will be sent')
+    return false
   end
+  executed, ret = pcall(keyFunction)
+  if not executed then
+    log('FATAL: Keyfunc for ' .. mods .. '+' .. tostring(kc) .. ' failed.')
+
+    if DEBUG == true then
+      log('DEBUG: CALL KEY FUNCTION AGAIN TO FORCE CRASH')
+      ret = keyFunction()
+    end
+  end
+
+
   log('SHUNT ORIGINAL EVENT: ' .. tostring(ret))
   return ret
 end
@@ -158,10 +184,9 @@ function selectMenuItem(tblMenuItem)
     app:selectMenuItem(menuPath)
     return true -- Don't prop the current event
   else
-    log('Menu path not found:  ' .. hs.inspect(menuPath))
 	  menu = app:findMenuItem(tblMenuItem)
 	  if menu ~= nil then
-      log('Sending menu item:  ' .. hs.inspect(tblMenuItem))
+      log('Sending menu item:  ' .. hs.inspect(tblMenuItem) .. ' to app ' .. app:name(app))
 	    app:selectMenuItem(tblMenuItem)
       return true -- Don't prop the current event
 	  end

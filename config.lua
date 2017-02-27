@@ -1,4 +1,4 @@
-DEBUG = true
+DEBUG = false
 CLEAR_LOG_ON_HYPER_KEY = true
 EVENTPROPERTY_EVENTSOURCEUSERDATA = 42 -- print(hs.inspect(hs.eventtapr.event.properties))
 -- For bindings that require canceling the current key event and spawing a new event with a delay
@@ -6,6 +6,7 @@ keySendDelay =.05
 -- Used to prevent recurison
 semaphore = 0
 userData = 55555
+skipToggle = false
 
 ultra = { 'ctrl', 'alt', 'cmd' }
 
@@ -38,6 +39,7 @@ keyEvents = {
   ctrlS          = function()  return sendKeyOrMenu('save') end,
   ctrlY          = function()  return sendKeyOrMenu('redo') end,
   ctrlZ          = function()  return sendKey(getCombo('undo')) end,
+  f2             = function()  return sendKeyOrMenu('rename') end,
 
   -- Thse are being monitored special because of issue where taps (keyDown) are inexplicably stopping
   -- Goal: Store eventtaps as variables, if I find taps are not trapping events, hit a shortcut to log
@@ -80,9 +82,10 @@ keyEvents = {
 
 keyFuncs = {
   noMods = {
-    [96] = keyEvents.ctrlR, -- F5
+    [96] = keyEvents.ctrlR, -- F5 (reload)
     [115] = keyEvents.home,
-    [119] = keyEvents.endKey
+    [119] = keyEvents.endKey,
+    [120] = keyEvents.f2 -- F2 (edit cell/ Finder: rename)
   },
   ctrlMods = {
     [0] = keyEvents.ctrlA,
