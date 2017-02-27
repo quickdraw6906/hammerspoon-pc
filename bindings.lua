@@ -16,7 +16,6 @@ hs.hotkey.bind({'alt'}, 't', function() openNewTerminalWindow() end)
 
 -- -----------------------------------------------------------------------------
 -- Tools for writing Hammerspoon script
-
 hs.hotkey.bind({'alt'}, 'A', function() hs.alert(hs.application.frontmostApplication():name()) end)
 hs.hotkey.bind({'alt'}, 'B', function() hs.alert(hs.application.frontmostApplication():bundleID()) end)
 
@@ -27,7 +26,9 @@ hs.hotkey.bind({'alt'}, 'F', function()
   hs.alert(flagsEventTap)
   dump(flagsEventTap)
   hs.pasteboard.setContents(flagsEventTap)
-
 end)
 -- When taps drop, need to reload to get them back.
 hs.hotkey.bind({'cmd', 'shift'}, 'R', function() hs.reload() end)
+
+-- Nope. Was hoping the repeat function would keep events from falling through to the OS.
+hs.hotkey.bind({'ctrl'}, 'right', nil, function() log('hotkey') return keyEvents.ctrlRight() end, function() return true end, function() log('repeat') return keyEvents.ctrlRight end)

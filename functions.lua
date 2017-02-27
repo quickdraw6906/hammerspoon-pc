@@ -11,6 +11,55 @@ function log(message)
   if DEBUG == true then print(message) end
 end
 
+function execKeyFunction(mods, kc, triggeringEvent)
+  local keyFunction = nil
+  if mods == 'nil' then return false end
+
+  log('EXECKEYFUNCTION mods=' .. mods .. '; kc=' .. tostring(kc) .. '; flags=' .. hs.inspect(triggeringEvent:getFlags()))
+
+  ret = false
+  if not pcall(function() ret = keyFuncs[mods][kc]() end) then
+    log('No key function for ' .. mods .. '+' .. tostring(kc))
+    return false -- Pass original key event through
+  end
+  log('RETURNING TO OS: ' .. tostring(ret))
+  return ret
+end
+
+-- Send keyDown and keyUp events for a combo.
+function sendKey(combo, finishOfSequence)
+  -- If not passed a valid combo, just signal for the event to pass
+  -- through to the OS (for apps that already behave like a PC (i.e., Microsoft Remote Desktop))
+  if combo == nil or combo == false then return false end
+  if finishOfSequence == nil then finishOfSequence = true end
+
+  local modifiers = combo[1]
+  local key = combo[2]
+  if key == nil then return false end -- No combo for current app, just send event as is
+
+  log('Sending key: ' .. key .. ' with modifiers: ' .. hs.inspect(modifiers))
+
+  -- keyDown event
+  hs.timer.delayed.new(.005, function()
+    log('Sending keyDown')
+    getKeyEvent(modifiers, key, true):post()
+    hs.timer.usleep(1000) -- tenth of a millisecond
+    -- See comment at moveBeginingOfNextWord() below
+    if finishOfSequence == true then
+      --log('Enabling keyUp event')
+      etKeyUp:start()
+      semaphore = 0
+    end
+    -- keyUp event
+    hs.timer.delayed.new(.005, function()
+      log('sending keyUp')
+      getKeyEvent(modifiers, key, false, finishOfSequence):post()
+    end):start()
+  end):start()
+
+  return true -- Don't prop the current event
+end
+
 -- Make keyboard events to send to OS
 -- Trying to go low level to get the right things to happen in VMs. A work in progress.
 function getKeyEvent(modifiers, key, keyDownEvent, finish)
@@ -60,61 +109,28 @@ function getMenuPath(strMenuName)
   return menuPth
 end
 
-
--- Send keyDown and keyUp events for a combo.
-function sendKey(combo, finishOfSequence)
-  -- If not passed a valid combo, just signal for the event to pass
-  -- through to the OS (for apps that already behave like a PC (i.e., Microsoft Remote Desktop))
-  if combo == nil or combo == false then return false end
-  if finishOfSequence == nil then finishOfSequence = true end
-
-  local modifiers = combo[1]
-  local key = combo[2]
-  if key == nil then return false end -- No combo for current app, just send event as is
-
-  log('Sending key: ' .. key .. ' with modifiers: ' .. hs.inspect(modifiers))
-
-  -- Tried just sending direct, but caused issues in various VM and RDP contexts
-  -- keyDown event
-  hs.timer.delayed.new(.1, function()
-    log('Sending keyDown')
-    getKeyEvent(modifiers, key, true):post()
-    hs.timer.usleep(1000) -- tenth of a millisecond
-    -- See comment at moveBeginingOfNextWord() below
-    if finishOfSequence == true then
-      --log('Enabling keyUp event')
-      etKeyUp:start()
-      semaphore = 0
-    end
-    -- keyUp event
-    log('sending keyUp')
-    getKeyEvent(modifiers, key, false, finishOfSequence):post()
-  end):start()
-
-  return true -- Don't prop the current event
-end
-
 -- Shortcuts that represent cut/copy/paste could either be sent as another keystroke,
 -- or as a direct firing of a menu item. One or the other approaches works better in
 -- certain apps (some apps don't have keyboard combo for these functions but have a menu)
 -- See functions_pckeys.lua to determine which approach will be used for a certain app
-function sendKeyOrMenu(pasteboardOperation)
+function sendKeyOrMenu(operation)
   -- First look to see if there is a combo defined for pasteboard opp and/or app
-  log('Sending pasteboardOperation: ' .. pasteboardOperation)
-  local combo = getCombo(pasteboardOperation)
+  log('Sending operation: ' .. operation)
+  local combo = getCombo(operation)
 
   if next(combo) ~= nil then
       -- Key combo found, returning that
       log('Sending combo ' .. hs.inspect(combo))
       return sendKey(combo, true)
   end
+  log('No combo found.')
   -- No combo found. Look for menu path
-  local menuPth = getMenuPath(pasteboardOperation)
+  local menuPth = getMenuPath(operation)
   if next(menuPth) == nill then
     log('Passing event through.')
     return false
   end -- No menu found, pass event onto OS unaltered
-  log('Found menu path ' .. hs.inspect(menuPth))
+  log('Activating menu path ' .. hs.inspect(menuPth))
   return selectMenuItem(menuPth)
 end
 

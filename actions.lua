@@ -84,20 +84,24 @@ combo = {
 
   nextWord = {
     default = {{'alt'}, 'right'},
-    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   },
   selectNextWord = {
     default = {{'alt', 'shift'}, 'right'},
-    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   },
 
   prevWord = {
     default = {{'alt'}, 'left'},
-    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   },
   selectPrevWord = {
     default = {{'alt', 'shift'}, 'left'},
-    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    VirtualBox_VM = {}
   },
 
   endLine = {

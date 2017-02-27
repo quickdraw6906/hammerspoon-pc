@@ -1,6 +1,6 @@
 DEBUG = true
 CLEAR_LOG_ON_HYPER_KEY = true
-EVENTPROPERTY_EVENTSOURCEUSERDATA = 42 -- print(hs.inspect(hs.eventtap.event.properties))
+EVENTPROPERTY_EVENTSOURCEUSERDATA = 42 -- print(hs.inspect(hs.eventtapr.event.properties))
 -- For bindings that require canceling the current key event and spawing a new event with a delay
 keySendDelay =.05
 -- Used to prevent recurison
@@ -35,7 +35,7 @@ keyEvents = {
   ctrlR          = function()  return sendKey(getCombo('reload')) end,
   ctrlV          = function()  return sendKeyOrMenu('paste') end,
   ctrlS          = function()  return sendKeyOrMenu('save') end,
-  ctrlZ          = function()  return sendKeyOrMenu('undo') end,
+  ctrlZ          = function()  return sendKey('undo') end,
   ctrlY          = function()  return sendKeyOrMenu('redo') end,
 
   -- Thse are being monitored special because of issue where taps (keyDown) are inexplicably stopping
@@ -79,7 +79,7 @@ keyEvents = {
 
 keyFuncs = {
   noMods = {
-    [96] = keyEvents.ctrlR,
+    [96] = keyEvents.ctrlR, -- F5
     [115] = keyEvents.home,
     [119] = keyEvents.endKey
   },
@@ -93,7 +93,7 @@ keyFuncs = {
     [9] = keyEvents.ctrlV,
     [11] = keyEvents.ctrlB,
     [13] = keyEvents.ctrlW,
-    [15] = keyEvents.ctrlR, -- F5
+    [15] = keyEvents.ctrlR,
     [16] = keyEvents.ctrlY,
     [32] = keyEvents.ctrlU,
     [34] = keyEvents.ctrlI,
