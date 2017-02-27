@@ -27,8 +27,8 @@ There is only one "real" keyboard layout for max efficiency. Mac has such a layo
 Paste from shift+fn not working in VirtualBox.
 Copy from ctrl+fn now working in Microsoft Remote Desktop.
 No x/c/p functions work in MinTTY (bash emulator for git) on Windoz (VM)
-
 Bind of ctrl+arrows not firing.
+In Atom, ctrl+a selects all then immediately deselects and moves to end of document
 
 I keep having the situation where Hammerspoon loses all eventtaps. I have to reload the config periodically. Would love some insights into that. I might have to schedule a reload on a timer every 30 seconds or so (yuck).
 

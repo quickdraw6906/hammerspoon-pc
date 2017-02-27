@@ -22,13 +22,13 @@ Go to a URL
 
 An issue arises when how an action is performed differs between applications, either
 by way of a menu path difference (Edit->Paste vs. Edit-Paste(submenu)->Paste) or because
-the function has a different shortcut. A third class of issue woiuld be how to handle
+the function has a different shortcut. A third class of issue would be how to handle
 remote computer control software, either a remote server or a virtual machine.
 
 In the third class of actions, there needs to be a way to have the action be simply passing
 through the keystroke(s) you entered.
 
-Below, add all action to application mappings needed. Use an empty table to have the
+Below, map all actions to application as needed. Use an empty table to have the
 straight keystroke/combo sent unaltered.
 
 ]]
@@ -56,6 +56,8 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
+  -- Next two are special cases where the triggering action is the holding of mofidiers only,
+  -- which on a Mac does not generate a key event (have to use flagsChanged event to tap)
   copyFn = { -- Used by ctrl+fn which can't pass that combo through to non-mac contexts
     default = {{'cmd'}, 'c'},
     Microsoft_Remote_Desktop = {{'ctrl'}, 'c'},
@@ -77,14 +79,15 @@ combo = {
     VirtualBox_VM = {}
   },
   redo = {
-    default = {{'cmd'}, 'y'}, -- No always implemented by apps. Try removing to have a menu item attempted
+    default = {{'cmd'}, 'y'}, -- Not always implemented by apps. Try removing to have a menu item attempted
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {{'ctrl'}, 'y'}
   },
-
+  -- On a mac, option+right jumps to end of current word (then ends of subsequent words).
+  -- On a PC, control+right jumps to begin of next word (sigh)
   nextWord = {
     default = {{'alt'}, 'right'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
   selectNextWord = {
@@ -92,15 +95,16 @@ combo = {
     Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
     VirtualBox_VM = {}
   },
-
+  -- On a mac, option+left jumps to beginning of previous word (and begining of subsequent words on repeat)
+  -- On a PC, control+left does the same thing (whew)
   prevWord = {
     default = {{'alt'}, 'left'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
   selectPrevWord = {
     default = {{'alt', 'shift'}, 'left'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
 
@@ -108,23 +112,23 @@ combo = {
     default = {{'cmd'}, 'right'},
     Terminal = {'ctrl', 'e'},
     VirtualBox_VM = {},
-    Microsoft_Remote_Desktop = {} -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {}
   },
   selectEndLine = {
     default = {{'cmd', 'shift'}, 'right'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
 
   beginLine = {
     default = {{'cmd'}, 'left'},
     Terminal = {'ctrl', 'a'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
   selectBeginLine = {
     default = {{'cmd', 'shift'}, 'left'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
 
@@ -152,45 +156,45 @@ combo = {
 
   open = {
     default = {{'cmd'}, 'o'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
   new = {
     default = {{'cmd'}, 'n'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
   close = {
     default = {{'cmd'}, 'w'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
 
   selectAll = {
     --default = {{'cmd'}, 'a'}, -- Deprecated. For an unknown reason, cmd+a would not send! Since no default here, sendKeyOrMenu() will look to send a menu command instead
     Terminal = {'ctrl', 'a'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
   bold = {
     default = {{'cmd'}, 'b'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
   italic = {
     default = {{'cmd'}, 'i'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
   underline = {
     default = {{'cmd'}, 'u'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
 
   reload = {
     default = {{'cmd'}, 'r'},
-    Microsoft_Remote_Desktop = {}, -- NOOP. Pass through key as typed (bound function returns false (don't cancel event))
+    Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   }
 }
@@ -198,6 +202,8 @@ combo = {
 -- -------------------------------------------------------------------------------------
 -- Menu item paths - See selectMenuItem()
 -- -------------------------------------------------------------------------------------
+-- If a combo isn't defined for an action, a look here will be done for the same action name
+-- to get a menu item path to try instead. Put menu items here that have no keyboard shortcut
 menuPath = {
   cut = {
     default = {'Edit', 'Cut'},

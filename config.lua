@@ -1,6 +1,6 @@
 DEBUG = false
 CLEAR_LOG_ON_HYPER_KEY = true
-EVENTPROPERTY_EVENTSOURCEUSERDATA = 42 -- print(hs.inspect(hs.eventtapr.event.properties))
+EVENTPROPERTY_EVENTSOURCEUSERDATA = 42 -- print(hs.inspect(hs.eventtap.event.properties))
 -- For bindings that require canceling the current key event and spawing a new event with a delay
 keySendDelay =.05
 -- Used to prevent recurison
@@ -17,14 +17,14 @@ keyEvents = {
   ctrlShiftLeft  = function()  return sendKey(getCombo('selectNextWord')) end,
   ctrlRight      = function()  return sendKey(getCombo('prevWord')) end,
   ctrlShiftRight = function()  return sendKey(getCombo('selectPrevWord')) end,
-  home           = function(e) return sendKey(getCombo('beginLine')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
-  shiftHome      = function(e) return sendKey(getCombo('selectBeginLine')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
+  home           = function(e) return sendKey(getCombo('beginLine')) end,
+  shiftHome      = function(e) return sendKey(getCombo('selectBeginLine')) end,
   ctrlHome       = function()  return sendKey(getCombo('docBegin')) end,
   ctrlShiftHome  = function()  return sendKey(getCombo('selectDocBegin')) end,
   endKey         = function()  return sendKey(getCombo('endLine')) end,
   shiftEnd       = function()  return sendKey(getCombo('selectEndLine')) end,
-  ctrlEnd        = function(e) return sendKey(getCombo('docEnd')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
-  ctrlShiftEnd   = function(e) return sendKey(getCombo('selectDocEnd')) end, -- Not handling for Microsoft Remote Desktop (who the heck does this anyway?)
+  ctrlEnd        = function(e) return sendKey(getCombo('docEnd')) end,
+  ctrlShiftEnd   = function(e) return sendKey(getCombo('selectDocEnd')) end,
   ctrlF          = function()  return sendKey(getCombo('find')) end,
   ctrlX          = function()  return sendKeyOrMenu('cut') end,
   ctrlA          = function()  return sendKeyOrMenu('selectAll') end,
@@ -80,6 +80,7 @@ keyEvents = {
 
 }
 
+-- Map keycodes to corresponding custom events
 keyFuncs = {
   noMods = {
     [96] = keyEvents.ctrlR, -- F5 (reload)
