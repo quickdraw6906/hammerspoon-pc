@@ -42,7 +42,7 @@ For keyboards with this layout, and a left hand mouser:
  Main keys |**[Ins]**[Home][Pg Up]|[Clr][Eq][Div][Mul]
  Main keys |**[Del]**[End] [Pg Dn]|[7] [8] [9] [-]
  Main keys ||[4] [5] [6] [+]
- **[Shift]**  Main keys  **[Shift]** |[Up]|[1] [2] [3] [Ent]
+ [Shift]  Main keys  **[Shift]** |[Up]|[1] [2] [3] [Ent]
  [Ctrl] [Win] [Alt] [Space] [Alt] [Win] **[Ctrl]**  |  **[Left]** [Down] **[Right]**  |[Zero][Dot][Ent]
 
 ~~Herm...so much for tables in Github. Renders fine here [kramdown renderer](https://kramdown.herokuapp.com/)~~
