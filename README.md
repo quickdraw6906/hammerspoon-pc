@@ -27,7 +27,7 @@ There is only one "real" keyboard layout for max efficiency. Mac has such a layo
 * No x/c/p functions work in MinTTY (bash emulator for git) on Windoz (VM)
 * Bind of ctrl+arrows not firing.
 * In Atom, ctrl+a selects all then immediately deselects and moves to end of document
-
+* While composing an email at mail.google.com, using ctrl+z into the window move the cursor to the end of docment before pasting.
 * I keep having the situation where Hammerspoon loses all eventtaps. I have to reload the config periodically. Would love some insights into that. I might have to schedule a reload on a timer every 30 seconds or so (yuck).
 
 ## Work in Progress
@@ -38,7 +38,7 @@ For keyboards with this layout, and a left hand mouser:
 
 |Main Area|Magic Happens|Ten Key Area
 | :-------------: | :-----------: | :---------------: |
-[~][F1]..........................[F12][Eject]|[PrtScr] [ScrLck] [P/Brk]|~~[F16][F17][F18][F19]~~
+[~][F1]..........................[F12]~~[Eject]~~|[PrtScr] [ScrLck] [P/Brk]|~~[F16][F17][F18][F19]~~
  Main keys |**[Ins]**[Home][Pg Up]|[NL][Eq][Div][Mul]
  Main keys |**[Del]**[End] [Pg Dn]|[7] [8] [9] [-]
  Main keys ||[4] [5] [6] [+]
@@ -46,4 +46,4 @@ For keyboards with this layout, and a left hand mouser:
  [Ctrl] [Win] [Alt] [Space] [Alt] [Win] **[Ctrl]**  |  **[Left]** [Down] **[Right]**  |[Zero][Dot][Ent]
 
 ~~Herm...so much for tables in Github. Renders fine here [kramdown renderer](https://kramdown.herokuapp.com/)~~.
-Note to self: tables need a blank line immediately preceding.
+Note to self: Markdown tables need a blank line immediately preceding, at least at GitHub.
