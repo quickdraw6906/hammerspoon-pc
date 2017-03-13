@@ -40,42 +40,51 @@ keyEvents = {
   ctrlY          = function()  return sendKeyOrMenu('redo') end,
   ctrlZ          = function()  return sendKey(getCombo('undo')) end,
   f2             = function()  return sendKeyOrMenu('rename') end,
+  f3             = function()  return sendKeyOrMenu('findagain') end,
 
   -- Thse are being monitored special because of issue where taps (keyDown) are inexplicably stopping
   -- Goal: Store eventtaps as variables, if I find taps are not trapping events, hit a shortcut to log
   -- out the eventtap variables. If they are still there, then that will help narrow down the problem
   -- (i.e., get as much data as possible before filing the issue).
   ctrlC          = function()
-                        ret = sendKeyOrMenu('copy')
-                        hs.timer.delayed.new(1, function()
-                          log('Regular copied. pasteboard=' .. hs.pasteboard.getContents())
-                        end):start()
-                        return ret
+                      ret = sendKeyOrMenu('copy')
+                      hs.timer.delayed.new(1, function()
+                      if DEBUG and not hs.pasteboard.getContents() == nil then
+                        log('Regular copied. pasteboard=' .. hs.pasteboard.getContents())
+                      end
+                    end):start()
+                    return ret
   end,
 
   ctrlFn         = function()
-                        ret = sendKey(getCombo('copyFn'))
-                        hs.timer.delayed.new(.5, function()
-                        	log('Special copy. pasteboard=' .. hs.pasteboard.getContents())
-                        end):start()
-                        return ret
+                      ret = sendKey(getCombo('copyFn'))
+                      hs.timer.delayed.new(.5, function()
+                      if DEBUG and not hs.pasteboard.getContents() == nil then
+                        log('Special copy. pasteboard=' .. hs.pasteboard.getContents())
+                      end
+                    end):start()
+                    return ret
   end,
 
   shiftFn        = function()
-                        ret = sendKey(getCombo('pasteFn'))
-                        hs.timer.delayed.new(.5, function()
+                      ret = sendKey(getCombo('pasteFn'))
+                      hs.timer.delayed.new(.5, function()
+                        if DEBUG and not hs.pasteboard.getContents() == nil then
                           log('Special paste. pasteboard=' .. hs.pasteboard.getContents())
-                        end):start()
-                        return ret
+                        end
+                    end):start()
+                    return ret
   end,
 
   shiftFwdDelete = function()
-                        --hs.alert(hs.application.frontmostApplication():name())
-                        ret = sendKey(getCombo('cut'))
-                        hs.timer.delayed.new(.51, function()
+                      --hs.alert(hs.application.frontmostApplication():name())
+                      ret = sendKey(getCombo('cut'))
+                      hs.timer.delayed.new(.51, function()
+                        if DEBUG and not hs.pasteboard.getContents() == nil then
                           log('Special cut. pasteboard=' .. hs.pasteboard.getContents())
-                        end):start()
-                        return ret
+                        end
+                    end):start()
+                    return ret
   end
 
 }
@@ -84,6 +93,7 @@ keyEvents = {
 keyFuncs = {
   noMods = {
     [96] = keyEvents.ctrlR, -- F5 (reload)
+    [99] = keyEvents.f3, -- F3
     [115] = keyEvents.home,
     [119] = keyEvents.endKey,
     [120] = keyEvents.f2 -- F2 (edit cell/ Finder: rename)

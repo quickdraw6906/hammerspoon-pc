@@ -13,5 +13,9 @@ etKeyUp = hs.eventtap.new({hs.eventtap.event.types.keyUp}, function (e)
     --log('Disabling shunt')
     ekKeyDownShuntCtrl:stop()
     etKeyUp:stop()
+
+    -- Clear any flags. This may not be good in case of repeats
+    --e:setFlags({})
+    --log('Unset flags. flags=' .. hs.inspect(e:getFlags()))
   end
 end):start()

@@ -34,7 +34,7 @@ function execKeyFunction(mods, kc, triggeringEvent)
   if varType == 'function' then
     keyFunction = keyFuncs[mods][kc]
   else
-    log('No keyfunc for ' .. mods .. '+' .. tostring(kc) .. '. Original event will be sent')
+    log('No keyfunc for ' .. mods .. '[' .. tostring(kc) .. ']. Original event will be sent')
     return false
   end
   executed, ret = pcall(keyFunction)
@@ -98,21 +98,23 @@ end
 function getCombo(strCombo)
   -- Look up combo from combo table
   local app = string.gsub(hs.application.frontmostApplication():name(), ' ', '_')
-  --log('Getting combo ' .. strCombo .. ' with subkey ' .. app)
+  app = string.gsub(app, '^%d', 'N') -- Tabe indicies can't start with a number
+  log('Getting combo ' .. strCombo .. ' with subkey ' .. app)
   local comboNode = combo[strCombo]
   if comboNode == nil then
-    --log('Combo node not found: ' .. comboNode)
-    return {}
+    log('Combo node ' .. strCombo .. ' not found ')
+    return nil
   end
   local keyCombo = comboNode[app]
   if keyCombo == nil then
-    --log('No combo node for ' .. app .. '. Looking for default combo...')
+    log('No combo for ' .. app)
     keyCombo = comboNode['default']
   end
   if keyCombo == nil then
     log('No defined or default combo for ' .. strCombo )
-    return {} -- No valid combo in table. Pass through event to OS.
+    return nil -- No valid combo in table. Pass through event to OS.
   end
+  log('Returning combo' .. hs.inspect(keyCombo))
   return keyCombo
 end
 
@@ -129,6 +131,10 @@ function getMenuPath(strMenuName)
     log('No combo found for ' .. app .. '. Looking for default combo...')
     menuPth = menuNode['default']
   end
+  if menuPth == nill then
+    log('No menu item found')
+    return {} -- No valid combo in table. Pass through event to OS.
+  end
   if next(menuPth) == nil then
     log('No menu item found with path')
     return {} -- No valid combo in table. Pass through event to OS.
@@ -143,19 +149,22 @@ end
 function sendKeyOrMenu(operation)
   -- First look to see if there is a combo defined for pasteboard opp and/or app
   local combo = getCombo(operation)
-
-  if next(combo) ~= nil then
-      -- Key combo found, returning that
-      return sendKey(combo, true)
+  if combo ~= nil then
+    if next(combo) ~= nil then
+        -- Key combo found, returning that
+        return sendKey(combo, true)
+    end
+    -- Here = pass through original event
+  else
+    log('Looking for menu...')
+    -- No combo found. Look for menu path
+    local menuPth = getMenuPath(operation)
+    if next(menuPth) == nill then
+      return false
+    end -- No menu found, pass event onto OS unaltered
+    log('Activating menu path ' .. hs.inspect(menuPth))
+    return selectMenuItem(menuPth)
   end
-  log('Looking for menu...')
-  -- No combo found. Look for menu path
-  local menuPth = getMenuPath(operation)
-  if next(menuPth) == nill then
-    return false
-  end -- No menu found, pass event onto OS unaltered
-  log('Activating menu path ' .. hs.inspect(menuPth))
-  return selectMenuItem(menuPth)
 end
 
 -- Half baked attempt to get VM and RDP contexts to work

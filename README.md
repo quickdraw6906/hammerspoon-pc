@@ -19,15 +19,14 @@ Add all that up and Left hand mouse keyboard wizards coming from decades of PC u
 ** Also a hope is to forestall arthritis by having to do the contortions the Mac keyboard layout cause.
 
 ## Pasteboard, Right Hand?
-There is only one "real" keyboard layout for max efficiency. Mac has such a layout but where on a PC there is an insert key, the mac has a function key. So to get x/c/p on the right hand consistent with the standard shortcuts (can I say that in Mac land? STANDARD!) c/x/p keys of ctrl+insert, shift+del (forward delete to those in mac land), and shift+insert
+There is only one "real" keyboard layout for max efficiency (see below). Mac has such a layout but where on a PC there is an insert key, the mac has a function key. So to get x/c/p on the right hand consistent with the standard PC x/c/p shortcuts of ctrl+insert, shift+del (forward delete to those in mac land), and shift+insert, we have to use a program like Hammerspoon to (literally) take back control!
 
 ## Open Issues
 * Paste from shift+fn not working in VirtualBox.
-* Copy from ctrl+fn now working in Microsoft Remote Desktop.
+* Copy from ctrl+fn not working in Microsoft Remote Desktop.
 * No x/c/p functions work in MinTTY (bash emulator for git) on Windoz (VM)
 * Bind of ctrl+arrows not firing.
-* In Atom, ctrl+a selects all then immediately deselects and moves to end of document
-* While composing an email at mail.google.com, using ctrl+z into the window move the cursor to the end of docment before pasting.
+
 * I keep having the situation where Hammerspoon loses all eventtaps. I have to reload the config periodically. Would love some insights into that. I might have to schedule a reload on a timer every 30 seconds or so (yuck).
 
 ## Work in Progress
@@ -38,7 +37,7 @@ For keyboards with this layout, and a left hand mouser:
 
 |Main Area|Magic Happens|Ten Key Area
 | :-------------: | :-----------: | :---------------: |
-[~][F1]..........................[F12]~~[Eject]~~|[PrtScr] [ScrLck] [P/Brk]|~~[F16][F17][F18][F19]~~
+[~][F1]..........................[F12][Eject]|[PrtScr] [ScrLck] [P/Brk]|~~[F16][F17][F18][F19]~~
  Main keys |**[Ins]**[Home][Pg Up]|[NL][Eq][Div][Mul]
  Main keys |**[Del]**[End] [Pg Dn]|[7] [8] [9] [-]
  Main keys ||[4] [5] [6] [+]
@@ -46,4 +45,4 @@ For keyboards with this layout, and a left hand mouser:
  [Ctrl] [Win] [Alt] [Space] [Alt] [Win] **[Ctrl]**  |  **[Left]** [Down] **[Right]**  |[Zero][Dot][Ent]
 
 ~~Herm...so much for tables in Github. Renders fine here [kramdown renderer](https://kramdown.herokuapp.com/)~~.
-Note to self: Markdown tables need a blank line immediately preceding, at least at GitHub.
+Note to self: tables need a blank line immediately preceding.

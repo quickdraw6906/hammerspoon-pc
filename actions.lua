@@ -49,7 +49,8 @@ combo = {
   copy = {
     default = {{'cmd'}, 'c'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    NPassword_6 = {{'cmd'}, 'c'}
   },
   paste = {
     default = {{'cmd'}, 'v'},
@@ -107,31 +108,38 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
-
   endLine = {
     default = {{'cmd'}, 'right'},
     Terminal = {'ctrl', 'e'},
     VirtualBox_VM = {},
-    Microsoft_Remote_Desktop = {}
+    Microsoft_Remote_Desktop = {},
+    -- SKip in browsers. cmd+arrows used to navigate pages
+    Chrome = {},
+    Safari = {},
+    Firefox = {},
+    Opera = {}
   },
   selectEndLine = {
     default = {{'cmd', 'shift'}, 'right'},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
-
   beginLine = {
     default = {{'cmd'}, 'left'},
     Terminal = {'ctrl', 'a'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    -- SKip in browsers. cmd+arrows used to navigate pages
+    Chrome = {},
+    Safari = {},
+    Firefox = {},
+    Opera = {}
   },
   selectBeginLine = {
     default = {{'cmd', 'shift'}, 'left'},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
-
   docBegin = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
     default = {{'cmd'}, 'up'},
     Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+home
@@ -142,7 +150,6 @@ combo = {
     Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+shift+home
     VirtualBox_VM = {}
   },
-
   docEnd = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
     default = {{'cmd'}, 'down'},
     Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+end
@@ -153,7 +160,6 @@ combo = {
     Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+end
     VirtualBox_VM = {}
   },
-
   open = {
     default = {{'cmd'}, 'o'},
     Microsoft_Remote_Desktop = {},
@@ -169,7 +175,6 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
-
   selectAll = {
     --default = {{'cmd'}, 'a'}, -- Deprecated. For an unknown reason, cmd+a would not send! Since no default here, sendKeyOrMenu() will look to send a menu command instead
     Terminal = {'ctrl', 'a'},
@@ -191,9 +196,16 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
-
   reload = {
     default = {{'cmd'}, 'r'},
+    Microsoft_Remote_Desktop = {},
+    VirtualBox_VM = {}
+  },
+  rename = {
+    Google_Chrome = {{}, 'F2'}
+  },
+  findagain = {
+    default = {{'cmd'}, 'g'},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   }

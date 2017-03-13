@@ -1,5 +1,6 @@
 etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
-  local flags = hs.eventtap.checkKeyboardModifiers() -- Modifier keys user was pressing
+  -- local flags = hs.eventtap.checkKeyboardModifiers() -- Modifier keys user was pressing
+  local flags = e:getFlags()
 
   log('keyDown event: keycode=' .. tostring(e:getKeyCode()) ..
     '; userdata=' .. tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA)) ..
@@ -22,7 +23,10 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
   -- of the event to distinguish itself from user/OS key events. See getKeyEvent()
   -- This ensures that hs.hotkey.bind (using functions in keyEvent table) won't
   -- fire a recursion.
-  if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == 55555 then return false end
+  if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == 55555 then
+    log('Skipping keyDown event. User data 55555 present')
+    return false
+  end
 
   -- Experimental
   if semaphore == 1 then
@@ -31,19 +35,19 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
   end
 
   if not flags.ctrl and not flags.shift and not flags.alt and not flags.cmd then
-    execKeyFunction('noMods', e:getKeyCode(), e)
+    return execKeyFunction('noMods', e:getKeyCode(), e)
   end
 
   if flags.ctrl and not flags.shift then
-    execKeyFunction('ctrlMods', e:getKeyCode(), e)
+    return execKeyFunction('ctrlMods', e:getKeyCode(), e)
   end
 
   if flags.shift and not flags.ctrl then
-    execKeyFunction('shiftMods', e:getKeyCode(), e)
+    return execKeyFunction('shiftMods', e:getKeyCode(), e)
   end
 
   if flags.shift and flags.ctrl then
-    execKeyFunction('ctrlShiftMods', e:getKeyCode(), e)
+    return execKeyFunction('ctrlShiftMods', e:getKeyCode(), e)
   end
 
   -- Could add additional modifier combos like w/ command key (but this project for PC keystrokes, mostly)
@@ -52,7 +56,6 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
 
 end)
 etKeyDown:start()
-
 -- -------------------------------------------------------------------------------------
 -- Expirimental: Cancel any other keyboard events while another binding action (script) is working
 ekKeyDownShuntCtrl = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
