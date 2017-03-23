@@ -36,26 +36,34 @@ straight keystroke/combo sent unaltered.
 
 -- Any apps that should get sent the typed shortcut unaltered (not the default) should have an entry for that shortcut
 combo = {
+  --clear = {
+  --  default = {{}, 'delete'}
+  --},
   find = {
     default = {{'cmd'}, 'f'},
     Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    Terminal  = {},
   },
   cut = { -- No default key here will signal a menu command instead. See sendKeyOrMenu()
     default = {{'cmd'}, 'x'},
     Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    FileZilla = {{'cmd'}, 'x'}  -- Doesn't work. Apps that don't have menu items are half baked.
   },
   copy = {
     default = {{'cmd'}, 'c'},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
-    NPassword_6 = {{'cmd'}, 'c'}
+    Terminal = {}, -- Pass through as ctrl+c (stop)
+    NPassword_6 = {{'cmd'}, 'c'},
+    FileZilla = {{'cmd'}, 'c'} -- Doesn't work. Apps that don't have menu items are half baked.
   },
   paste = {
     default = {{'cmd'}, 'v'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    FileZilla = {{'cmd'}, 'v'}  -- Doesn't work. Apps that don't have menu items are half baked.
   },
   -- Next two are special cases where the triggering action is the holding of mofidiers only,
   -- which on a Mac does not generate a key event (have to use flagsChanged event to tap)
@@ -140,20 +148,20 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
-  docBegin = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
+  beginDoc = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
     default = {{'cmd'}, 'up'},
     Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+home
-    VirtualBox_VM = {}
+    VirtualBox_VM = {{'ctrl'},'home'}
   },
   selectDocBegin = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
     default = {{'cmd','shift'}, 'up'},
     Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+shift+home
     VirtualBox_VM = {}
   },
-  docEnd = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
+  endDoc = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
     default = {{'cmd'}, 'down'},
     Microsoft_Remote_Desktop = {}, -- NOOP. User should type ctrl+end
-    VirtualBox_VM = {}
+    VirtualBox_VM = {{'ctrl'}, 'end'}
   },
   selectDocEnd = { -- This won't do what it says in "smart" editors. Add a combo for your real app (like Atom) in this block
     default = {{'cmd', 'shift'}, 'down'},
@@ -184,12 +192,14 @@ combo = {
   bold = {
     default = {{'cmd'}, 'b'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    Terminal  = {}, -- Back in vi
   },
   italic = {
     default = {{'cmd'}, 'i'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    Terminal  = {}, -- Insert in vi
   },
   underline = {
     default = {{'cmd'}, 'u'},

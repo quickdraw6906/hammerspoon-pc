@@ -12,6 +12,17 @@ ultra = { 'ctrl', 'alt', 'cmd' }
 
 -- Map keys entered to corresponding action
 keyEvents = {
+  clear          = function()  return sendKey(getCombo('clear')) end,
+  zero           = function()  return sendKey({{}, '0'}) end,
+  one            = function()  return sendKey({{}, '1'}) end,
+  two            = function()  return sendKey({{}, '2'}) end,
+  three          = function()  return sendKey({{}, '3'}) end,
+  four           = function()  return sendKey({{}, '4'}) end,
+  five           = function()  return sendKey({{}, '5'}) end,
+  six            = function()  return sendKey({{}, '6'}) end,
+  seven          = function()  return sendKey({{}, '7'}) end,
+  eight          = function()  return sendKey({{}, '8'}) end,
+  nine           = function()  return sendKey({{}, '9'}) end,
   -- See actions.lua for the actions (param to getCombo) and for mapping them to specific applications
   ctrlLeft       = function()  return sendKey(getCombo('nextWord')) end,
   ctrlShiftLeft  = function()  return sendKey(getCombo('selectNextWord')) end,
@@ -19,11 +30,11 @@ keyEvents = {
   ctrlShiftRight = function()  return sendKey(getCombo('selectPrevWord')) end,
   home           = function(e) return sendKey(getCombo('beginLine')) end,
   shiftHome      = function(e) return sendKey(getCombo('selectBeginLine')) end,
-  ctrlHome       = function()  return sendKey(getCombo('docBegin')) end,
+  ctrlHome       = function()  return sendKey(getCombo('beginDoc')) end,
   ctrlShiftHome  = function()  return sendKey(getCombo('selectDocBegin')) end,
   endKey         = function()  return sendKey(getCombo('endLine')) end,
   shiftEnd       = function()  return sendKey(getCombo('selectEndLine')) end,
-  ctrlEnd        = function(e) return sendKey(getCombo('docEnd')) end,
+  ctrlEnd        = function()  return sendKey(getCombo('endDoc')) end,
   ctrlShiftEnd   = function(e) return sendKey(getCombo('selectDocEnd')) end,
   ctrlF          = function()  return sendKey(getCombo('find')) end,
   ctrlX          = function()  return sendKeyOrMenu('cut') end,
@@ -92,11 +103,26 @@ keyEvents = {
 -- Map keycodes to corresponding custom events
 keyFuncs = {
   noMods = {
+    --[71] = keyEvents.clear,
+    --[82] = keyEvents.zero,
+    --[83] = keyEvents.one,
+    --[84] = keyEvents.two,
+    --[85] = keyEvents.three,
+    --[86] = keyEvents.four,
+    --[87] = keyEvents.five,
+    --[88] = keyEvents.six,
+    --[89] = keyEvents.seven,
+    --[91] = keyEvents.eight,
+    --[92] = keyEvents.nine,
     [96] = keyEvents.ctrlR, -- F5 (reload)
     [99] = keyEvents.f3, -- F3
     [115] = keyEvents.home,
     [119] = keyEvents.endKey,
     [120] = keyEvents.f2 -- F2 (edit cell/ Finder: rename)
+  },
+  altMods = {
+    [125] = keyEvents.ctrlEnd,
+    [126] = keyEvents.ctrlHome
   },
   ctrlMods = {
     [0] = keyEvents.ctrlA,

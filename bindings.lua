@@ -32,4 +32,11 @@ end)
 hs.hotkey.bind({'cmd', 'shift'}, 'r', function() hs.reload() end)
 
 -- Nope. Was hoping the repeat function would keep events from falling through to the OS.
-hs.hotkey.bind({'ctrl'}, 'right', nil, function() log('hotkey') return keyEvents.ctrlRight() end, function() return true end, function() log('repeat') return keyEvents.ctrlRight end)
+hs.hotkey.bind({'ctrl'}, 'right', 'test', function() log('hotkey') return pcall(keyEvents.ctrlRight) end, function() log('repeat') return repeatkey() end, function() return false end)
+
+repeatMode = false
+function repeatkey()
+  log('Repeat ON')
+  repeatMode = true
+  return pcall(keyEvents.ctrlRight)
+end

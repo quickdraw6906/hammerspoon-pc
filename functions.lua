@@ -27,7 +27,7 @@ function execKeyFunction(mods, kc, triggeringEvent)
   local ret = false
   if mods == 'nil' then return false end
 
-  log('EXECKEYFUNCTION mods=' .. mods .. '; kc=' .. tostring(kc) .. '; flags=' .. hs.inspect(triggeringEvent:getFlags()))
+  log('EXECKEYFUNCTION mods=' .. mods .. '; kc=' .. tostring(kc) .. ';repeat = ' .. tostring(repeatMode) .. '; flags=' .. hs.inspect(triggeringEvent:getFlags()))
 
   varType = type(keyFuncs[mods][kc])
   --dump(varType)
@@ -35,6 +35,9 @@ function execKeyFunction(mods, kc, triggeringEvent)
     keyFunction = keyFuncs[mods][kc]
   else
     log('No keyfunc for ' .. mods .. '[' .. tostring(kc) .. ']. Original event will be sent')
+    if repeatMode then
+      sendKey({{mods}, kc})
+    end
     return false
   end
   executed, ret = pcall(keyFunction)
@@ -47,12 +50,12 @@ function execKeyFunction(mods, kc, triggeringEvent)
     end
   end
 
-
   log('SHUNT ORIGINAL EVENT: ' .. tostring(ret))
   return ret
 end
 
 -- Send keyDown and keyUp events for a combo.
+-- Combo should be a table with a table of modifiers, and a key name to send
 function sendKey(combo, finishOfSequence)
   -- If not passed a valid combo, just signal for the event to pass
   -- through to the OS (for apps that already behave like a PC (i.e., Microsoft Remote Desktop))
@@ -76,11 +79,14 @@ function sendKey(combo, finishOfSequence)
       etKeyUp:start()
       semaphore = 0
     end
-    -- keyUp event
-    hs.timer.delayed.new(.005, function()
-      log('sending keyUp')
-      getKeyEvent(modifiers, key, false, finishOfSequence):post()
-    end):start()
+    if not repeatMode then
+      -- keyUp event
+      hs.timer.delayed.new(.005, function()
+        log('sending keyUp')
+        getKeyEvent(modifiers, key, false, finishOfSequence):post()
+      end):start()
+    end
+
   end):start()
 
   return true -- Don't prop the current event

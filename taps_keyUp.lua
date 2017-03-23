@@ -18,4 +18,11 @@ etKeyUp = hs.eventtap.new({hs.eventtap.event.types.keyUp}, function (e)
     --e:setFlags({})
     --log('Unset flags. flags=' .. hs.inspect(e:getFlags()))
   end
+
+  if repeatMode then
+    repeatMode = false
+    hs.alert('Repeat OFF')
+    return false -- Let event go through
+  end
+
 end):start()

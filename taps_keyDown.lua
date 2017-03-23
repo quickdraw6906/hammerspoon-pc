@@ -2,10 +2,20 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
   -- local flags = hs.eventtap.checkKeyboardModifiers() -- Modifier keys user was pressing
   local flags = e:getFlags()
 
+  local userData = ''
+  if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == nil then
+    userData = 'nil'
+  else
+    userDate = tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA))
+  end
+
   log('keyDown event: keycode=' .. tostring(e:getKeyCode()) ..
-    '; userdata=' .. tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA)) ..
+    '; userdata=' .. userData ..
     '; semaphore=' ..  tostring(semaphore) ..
-    '; flags=' .. hs.inspect(e:getFlags()))
+    '; repeat=' .. tostring(repeatMode) ..
+    '; flags=' .. hs.inspect(e:getFlags()) )
+
+  --print(hs.inspect(hs.eventtap.event.properties['keyboardEventAutorepeat']))
 
   if skipToggle then
     log('skipToggle on. Skipping shortcut.')
@@ -23,7 +33,7 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
   -- of the event to distinguish itself from user/OS key events. See getKeyEvent()
   -- This ensures that hs.hotkey.bind (using functions in keyEvent table) won't
   -- fire a recursion.
-  if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == 55555 then
+  if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == 55555 and not repeatMode then
     log('Skipping keyDown event. User data 55555 present')
     return false
   end
@@ -36,6 +46,10 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
 
   if not flags.ctrl and not flags.shift and not flags.alt and not flags.cmd then
     return execKeyFunction('noMods', e:getKeyCode(), e)
+  end
+
+  if flags.alt then
+    return execKeyFunction('altMods', e:getKeyCode(), e)
   end
 
   if flags.ctrl and not flags.shift then
