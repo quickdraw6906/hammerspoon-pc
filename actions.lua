@@ -49,6 +49,7 @@ combo = {
     default = {{'cmd'}, 'x'},
     Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
     VirtualBox_VM = {},
+    iTerm2 = {},
     FileZilla = {{'cmd'}, 'x'}  -- Doesn't work. Apps that don't have menu items are half baked.
   },
   copy = {
@@ -56,6 +57,7 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
     Terminal = {}, -- Pass through as ctrl+c (stop)
+    iTerm2 = {},
     NPassword_6 = {{'cmd'}, 'c'},
     FileZilla = {{'cmd'}, 'c'} -- Doesn't work. Apps that don't have menu items are half baked.
   },
@@ -96,8 +98,8 @@ combo = {
   -- On a PC, control+right jumps to begin of next word (sigh)
   nextWord = {
     default = {{'alt'}, 'right'},
-    Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    Microsoft_Remote_Desktop = {{'ctrl'},'right'},
+    VirtualBox_VM = {{'ctrl'},'right'}
   },
   selectNextWord = {
     default = {{'alt', 'shift'}, 'right'},
@@ -108,8 +110,8 @@ combo = {
   -- On a PC, control+left does the same thing (whew)
   prevWord = {
     default = {{'alt'}, 'left'},
-    Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    Microsoft_Remote_Desktop = {{'ctrl'},'left'},
+    VirtualBox_VM = {{'ctrl'},'left'}
   },
   selectPrevWord = {
     default = {{'alt', 'shift'}, 'left'},
@@ -207,9 +209,8 @@ combo = {
     VirtualBox_VM = {}
   },
   reload = {
-    default = {{'cmd'}, 'r'},
-    Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    defaul= {},
+    Google_Chrome = {{'cmd'}, 'r'},
   },
   rename = {
     Google_Chrome = {{}, 'F2'}

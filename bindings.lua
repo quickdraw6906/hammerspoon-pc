@@ -22,17 +22,17 @@ hs.hotkey.bind({'alt'}, 'h', function() flipSkipToggle() end)
 
 -- For debugging the loss of event taps at weird times
 -- (ctrl+fn and shift+fn bound on flagsChanged tap just stop working)
-hs.hotkey.bind({'alt'}, 'f', function()
-  flagsEventTap = hs.inspect(etFlags)
-  hs.alert(flagsEventTap)
-  dump(flagsEventTap)
-  hs.pasteboard.setContents(flagsEventTap)
-end)
+--hs.hotkey.bind({'alt'}, 'f', function()
+--  flagsEventTap = hs.inspect(etFlags)
+--  hs.alert(flagsEventTap)
+--  dump(flagsEventTap)
+--  hs.pasteboard.setContents(flagsEventTap)
+--end)
 -- When taps drop, need to reload to get them back.
 hs.hotkey.bind({'cmd', 'shift'}, 'r', function() hs.reload() end)
 
 -- Nope. Was hoping the repeat function would keep events from falling through to the OS.
-hs.hotkey.bind({'ctrl'}, 'right', 'test', function() log('hotkey') return pcall(keyEvents.ctrlRight) end, function() log('repeat') return repeatkey() end, function() return false end)
+--hs.hotkey.bind({'ctrl'}, 'right', nil, function() log('hotkey') return pcall(keyEvents.ctrlRight) end, function() log('repeat') return repeatkey() end, function() return false end)
 
 repeatMode = false
 function repeatkey()

@@ -1,39 +1,36 @@
 # hammerspoon-pc
-My hammerspoon Lua scripts to bring PC key bindings to the mac (and other useful goodies)
+My hammerspoon Lua scripts bring PC key bindings to the mac (and other useful goodies)
 
-This is a labor of love for a left hand mouser who needs a ten key and therefore REALLY REALLY wants cut/copy/paste functions on the right hand. Oh, and I really need to be productive on a mac but live in PC land much of the time for Visual Studio work (hey at least that work is in a VM on a mac now).
+This is a labor of love for a left hand mouser who needs a ten key and therefore REALLY REALLY wants cut/copy/paste functions on the right hand. Oh, and I really need to be productive on a mac but live in PC land much of the time for Visual Studio work (hey at least that work is in a VM on a mac now). I also do a ton of work through remote servers with Microsoft Remote Desktop.
 
 ## Principles
-Whoah to left hand people. Besides poor mouse choices on the market, Mac folks have the curse of right only cut/copy/paste on keyboard.
+Whoah to left hand people. Besides poor mouse choices on the market, Mac folks have the curse of right hand only for cut/copy/paste on keyboard. On the PC, Ctrl+Insert, Shift+Insert and Shift+Delete are key kit.
 
-PC folks making their way to the mac have to contend with a huge divide in keyboard conventions.
+PC folks making their way to the mac have to contend with a huge divide in keyboard conventions and cursor movement.
 
-Selecting whole words with the keyboard is more natural when the modifier for such action is as close to the arrow keys as possible. On a Mac, you have to twist your wrist to reach for the option key. Millimeters matter when using the thumb on option and the index finger on left arrow.
+Selecting whole words with the keyboard is more natural when the modifier for such action is as close to the arrow keys as possible. On a Mac, you have to twist your wrist to reach for the option key. Millimeters matter when using the thumb on option and the index finger on left and right arrow keys.
 
-IT professionals who need to administer PC's remotely and use alternate OS's need to run virtualization software and remote control software. That's a big problem from a Mac. The keyboard event model and just plain weird shortcut choices just doesn't translate well. Try moving ten lines of anything one line at a time from an Windoz VM to a file in Atom. Talk about brain/key gymnastics. Ditto with the Mac native app Microsoft Remote Desktop.
+IT professionals who need to administer PC's remotely and use alternate OS's need to run virtualization software and remote control software. That's a big problem from a Mac. The keyboard event model, and just plain weird shortcut choices just doesn't translate well. Try moving ten lines of anything one line at a time from an Windoz VM or RDP session to a file in Atom. Talk about brain/key gymnastics (yes there are other ways to do this, I'm just talking about small quick things).
 
-Add all that up and Left hand mouse keyboard wizards coming from decades of PC use (with diminishing brain plasticity) using Mac OS 10.12 (Sierra)...are pretty much screwed. These scripts are an attempt to ease the transition**
+Add all that up- Left hand mouse keyboard wizards coming from decades of PC use (with diminishing brain plasticity) using Mac OS 10.12 (Sierra)...are pretty much screwed. These scripts are an attempt to ease the transition**
 
 \* Hello Karabiner Elements as a reaction to issues with keyboard Sierra hell for us GTD folks.
 
-** Also a hope is to forestall arthritis by having to do the contortions the Mac keyboard layout cause.
+** Also a hope is to forestall arthritis by having to do the contortions the Mac keyboard layout cause, like tucking the thumb under the palm on the right hand to get Command+X, etc.
 
 ## Pasteboard, Right Hand?
-There is only one "real" keyboard layout for max efficiency (see below). Mac has such a layout but where on a PC there is an insert key, the mac has a function key. So to get x/c/p on the right hand consistent with the standard PC x/c/p shortcuts of ctrl+insert, shift+del (forward delete to those in mac land), and shift+insert, we have to use a program like Hammerspoon to (literally) take back control!
+There is only one "real" keyboard layout for max efficiency (see below). Yes, you can get good on the Mac layout. The PC will just always be better. Mac has a layout that comes close, but where on a PC there is an insert key, the mac has a function key. So to get x/c/p on the right hand consistent with the standard PC x/c/p shortcuts of ctrl+insert, shift+delete (forward delete to those in mac land), and shift+insert, we have to use a program like Hammerspoon to (literally) take back control!
+
+## Woah To Sierra Users
+Sierra changed the game with the key event model. None of this would be needed if this version of the OS didn't throw Karabiner off kilter. I'd just send folk to that app (https://pqrs.org/osx/karabiner/). Alas, it doesn't work under Sierra. Work is in progress on that, but who knows when it will be ready (downside of open source software).
 
 ## Open Issues
-* Paste from shift+fn not working in VirtualBox.
-* Copy from ctrl+fn not working in Microsoft Remote Desktop.
+* Paste from shift+fn (trying to mimic shift+insert on a PC) not working in VirtualBox nor Microsoft Remote Desktop.
+* Copy from ctrl+fn (trying to mimic ctrl+insert on a PC) not working in Microsoft Remote Desktop.
 * No x/c/p functions work in MinTTY (bash emulator for git) on Windoz (VM)
-* Bind of ctrl+arrows not firing.
-
-* I keep having the situation where Hammerspoon loses all eventtaps. I have to reload the config periodically. Would love some insights into that. I might have to schedule a reload on a timer every 30 seconds or so (yuck).
-
-## Work in Progress
-I'm still learning a ton about keyboard events. Any wisdom is appreciated.
 
 ## Why all these maps?
-For keyboards with this layout, and a left hand mouser:
+To replicate keyboard use with this PC layout, and a left hand mouser:
 
 |Main Area|Magic Happens|Ten Key Area
 | :-------------: | :-----------: | :---------------: |
@@ -43,6 +40,3 @@ For keyboards with this layout, and a left hand mouser:
  Main keys ||[4] [5] [6] [+]
  [Shift]  Main keys  **[Shift]** |[Up]|[1] [2] [3] [Ent]
  [Ctrl] [Win] [Alt] [Space] [Alt] [Win] **[Ctrl]**  |  **[Left]** [Down] **[Right]**  |[Zero][Dot][Ent]
-
-~~Herm...so much for tables in Github. Renders fine here [kramdown renderer](https://kramdown.herokuapp.com/)~~.
-Note to self: tables need a blank line immediately preceding.

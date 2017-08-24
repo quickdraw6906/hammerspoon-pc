@@ -24,9 +24,11 @@ keyEvents = {
   eight          = function()  return sendKey({{}, '8'}) end,
   nine           = function()  return sendKey({{}, '9'}) end,
   -- See actions.lua for the actions (param to getCombo) and for mapping them to specific applications
-  ctrlLeft       = function()  return sendKey(getCombo('nextWord')) end,
+  --ctrlLeft       = function()  return sendKey(getCombo('nextWord')) end,
+	ctrlLeft       = function()  return moveBeginingOfNextWord() end,
   ctrlShiftLeft  = function()  return sendKey(getCombo('selectNextWord')) end,
-  ctrlRight      = function()  return sendKey(getCombo('prevWord')) end,
+  --ctrlRight      = function()  return sendKey(getCombo('prevWord')) end,
+	ctrlRight      = function()  return moveBeginingOfPreviousWord() end,
   ctrlShiftRight = function()  return sendKey(getCombo('selectPrevWord')) end,
   home           = function(e) return sendKey(getCombo('beginLine')) end,
   shiftHome      = function(e) return sendKey(getCombo('selectBeginLine')) end,

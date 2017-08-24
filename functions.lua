@@ -213,7 +213,7 @@ end
 -- Challenge here is to handle rapid repeats of ctrl+left|right without
 -- the event falling through to the OS (which switches desktops).
 --
--- On a mac, option(alt)+right jumps to end of current word and option+right jumps
+-- On a mac, option(alt)+right jumps to end of current word and option+left jumps
 -- to beginning of current word. PC word jumping alternates from current word end
 -- to beginning of next work (left arrow) or current word begining to end of previous
 -- word (left arrow). For brains that aren't plastic enough to work the change to
@@ -221,14 +221,25 @@ end
 moveBeginingOfNextWord = function(flags)
   --semaphore = 1
   --ekKeyDownShuntCtrl:start()
+  local app = string.gsub(hs.application.frontmostApplication():name(), ' ', '_')
+  app = string.gsub(app, '^%d', 'N') -- Tabe indicies can't start with a number
+
+  log('moveBeginingOfNextWord:' .. app)
+
+  -- Non-mac contexts (Microsoft) already do 'the right thing'
+  if app == 'Microsoft_Remote_Desktop' or app == 'VirtualBox_VM' then
+    return false
+    --return sendKey(getCombo('nextWord'))
+  end
+
   if flags == 'shift' then
     sendKey(getCombo('altShiftRight'))
     sendKey(getCombo('altShiftRight'))
     sendKey(getCombo('altShiftLeft'), true)
   else
-    sendKey(getCombo('altRight'))
-    sendKey(getCombo('altRight'))
-    sendKey(getCombo('altLeft'), true)
+    sendKey(getCombo('nextWord'))
+    sendKey(getCombo('nextWord'))
+    sendKey(getCombo('prevWord'), true)
   end
   return true
 end
@@ -236,11 +247,23 @@ end
 moveBeginingOfPreviousWord = function(flags)
   --semaphore = 1
   --ekKeyDownShuntCtrl:start()
+
+  local app = string.gsub(hs.application.frontmostApplication():name(), ' ', '_')
+  app = string.gsub(app, '^%d', 'N') -- Tabe indicies can't start with a number
+
+  log('moveBeginingOfPrevWord:' .. app)
+
+  -- Non-mac contexts (Microsoft) already do 'the right thing'
+  if app == 'Microsoft_Remote_Desktop' or app == 'VirtualBox_VM' then
+    return false
+    --return sendKey(getCombo('prevWord'))
+  end
+
   if flags == 'shift' then
     sendKey(getCombo('altShiftLeft'), true)
     return true
   else
-    sendKey(getCombo('altLeft'), true)
+    sendKey(getCombo('prevWord'), true)
   end
   return true
 end
@@ -253,7 +276,7 @@ function openNewTerminalWindow()
   -- command-invocation based alias, versus a pointer-based alias means there needs to be
   -- apps like Apptivate (hat's to those guys).
   smartLaunchOrFocus('Terminal')
-  hs.eventtap.keyStroke({'cmd'}, 'n')
+  --hs.eventtap.keyStroke({'cmd'}, 'n')
   -- Could have also fired an OS 'open' command using hs.task.new(...):start()
 end
 
