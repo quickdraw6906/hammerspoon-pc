@@ -209,7 +209,7 @@ combo = {
     VirtualBox_VM = {}
   },
   reload = {
-    defaul= {},
+    default= {},
     Google_Chrome = {{'cmd'}, 'r'},
   },
   rename = {

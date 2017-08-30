@@ -8,7 +8,7 @@ hs.hotkey.bind({'cmd', 'shift'}, 'v', function() hs.eventtap.keyStrokes(hs.paste
 hs.hotkey.bind({'alt', 'ctrl'}, 'l', function() hs.caffeinate.lockScreen() end)
 
 -- If Chrome already open, cycle through open windows
-hs.hotkey.bind(ultra, 'space', function() smartLaunchOrFocus('Google Chrome') end)
+hs.hotkey.bind(ultra, 'c', function() launchAppAndTractorBeamToMouseScreen('Google Chrome') end)
 
 -- START Open Grab. Edit->Selection, [user selects an area], Edit->Copy, END (user left to close Grab app)
 hs.hotkey.bind({'alt'}, 'g', function() startNewGrabThenCopy() end)

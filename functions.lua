@@ -290,3 +290,9 @@ hs.application.watcher.new(
     end
   end
 ):start()
+
+-- Do what Apple should have but didn't when launching an application
+function launchAppAndTractorBeamToMouseScreen(appName)
+  -- position app window on screen with the mouse pointer (app tractor beam!)
+	wind = smartLaunchOrFocus(appName):moveToScreen(hs.mouse.getCurrentScreen()):focus()
+end

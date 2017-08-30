@@ -85,16 +85,23 @@ module.smartLaunchOrFocus = function(launchApps)
 
     if not currentIndex then
       -- if none of them is selected focus the first one
-      runningWindows[1]:focus()
+			wind = runningWindows[1]
+      wind:focus()
     else
       -- otherwise cycle through all the windows
       local newIndex = currentIndex + 1
       if newIndex > #runningWindows then newIndex = 1 end
 
-      runningWindows[newIndex]:focus()
+			wind = runningWindows[newIndex]
+      wind:focus()
+
     end
 
   end
+
+  -- Added by Sean Smith - Return window handle to caller so can do more interesting things with it
+  return wind
+
 end
 
 -- count all windows on all spaces
