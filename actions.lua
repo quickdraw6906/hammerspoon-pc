@@ -44,6 +44,7 @@ combo = {
     Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
     VirtualBox_VM = {},
     Terminal  = {},
+    iTerm2 = {},
   },
   cut = { -- No default key here will signal a menu command instead. See sendKeyOrMenu()
     default = {{'cmd'}, 'x'},
@@ -120,7 +121,8 @@ combo = {
   },
   endLine = {
     default = {{'cmd'}, 'right'},
-    Terminal = {'ctrl', 'e'},
+    Terminal = {{'alt'}, 'right'},
+    iTerm2 = {{}, 'end'},
     VirtualBox_VM = {},
     Microsoft_Remote_Desktop = {},
     -- SKip in browsers. cmd+arrows used to navigate pages
@@ -136,7 +138,8 @@ combo = {
   },
   beginLine = {
     default = {{'cmd'}, 'left'},
-    Terminal = {'ctrl', 'a'},
+    Terminal = {{'alt'}, 'left'},
+    iTerm2 = {},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
     -- SKip in browsers. cmd+arrows used to navigate pages
@@ -196,6 +199,7 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
     Terminal  = {}, -- Back in vi
+    iTerm2 = {},
   },
   italic = {
     default = {{'cmd'}, 'i'},

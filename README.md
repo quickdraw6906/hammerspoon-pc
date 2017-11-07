@@ -3,6 +3,36 @@ My hammerspoon Lua scripts bring PC key bindings to the mac (and other useful go
 
 This is a labor of love for a left hand mouser who needs a ten key and therefore REALLY REALLY wants cut/copy/paste functions on the right hand. Oh, and I really need to be productive on a mac but live in PC land much of the time for Visual Studio work (hey at least that work is in a VM on a mac now). I also do a ton of work through remote servers with Microsoft Remote Desktop.
 
+## Installation
+Install [Hammerspoon](http://www.hammerspoon.org/)
+Create a directory: ~/.hammerspoon and put all files there. If you already have Hammerspoon, rename init.lua to hammerspoon-pc.lua before copying into ~/.hammerspoon, then edit your init.lua and add the following:
+
+require('hammerspoon-pc')
+
+## Customizing
+You can have each app get a different set of keypresses. Edit actions.lua. But first you need to know the internal application name. In bindings.lua you will see that Alt+a has been mapped to a Hammerspoon function that displays the app name. Enter that name exactly into the mapping, replacing spaces with underscores.
+
+For example, moving the cursor to the begining or the ending of the line is tricking on a Mac. It's like the REALLY didn't want you to do that. To have this work in all contexts (browsers are special snowflakes), there is this mapping in actions.lua:
+
+```lua
+beginLine = {
+  default = {{'cmd'}, 'left'},
+  Terminal = {{'alt'}, 'left'},
+  iTerm2 = {},
+  Microsoft_Remote_Desktop = {},
+  VirtualBox_VM = {},
+  -- SKip in browsers. cmd+arrows used to navigate pages
+  Chrome = {},
+  Safari = {},
+  Firefox = {},
+  Opera = {}
+},
+```
+
+This says for the home key send Command+Left normally, but in browsers, Virtualbox and MS RDP pass through the home key and in Terminal (another special snowflake) send Alt+Left.
+
+
+
 ## Principles
 Whoah to left hand people. Besides poor mouse choices on the market, Mac folks have the curse of right hand only for cut/copy/paste on keyboard. On the PC, Ctrl+Insert, Shift+Insert and Shift+Delete are key kit.
 
