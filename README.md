@@ -40,23 +40,21 @@ PC folks making their way to the mac have to contend with a huge divide in keybo
 
 Selecting whole words with the keyboard is more natural when the modifier for such action is as close to the arrow keys as possible. On a Mac, you have to twist your wrist to reach for the option key. Millimeters matter when using the thumb on option and the index finger on left and right arrow keys.
 
-IT professionals who need to administer PC's remotely and use alternate OS's need to run virtualization software and remote control software. That's a big problem from a Mac. The keyboard event model, and just plain weird shortcut choices just doesn't translate well. Try moving ten lines of anything one line at a time from an Windoz VM or RDP session to a file in Atom. Talk about brain/key gymnastics (yes there are other ways to do this, I'm just talking about small quick things).
+IT professionals who need to administer PC's remotely and use alternate OS's need to run virtualization software and remote control software. That's a big problem from a Mac. The keyboard event model, and just plain weird shortcut choices just don't translate well. Try moving ten lines of anything one line at a time from a Windoz VM or RDP session to a file in Atom. Talk about brain/key gymnastics (yes there are other ways to do this, I'm just talking about small quick things).
 
-Add all that up- Left hand mouse keyboard wizards coming from decades of PC use (with diminishing brain plasticity) using Mac OS 10.12 (Sierra)...are pretty much screwed. These scripts are an attempt to ease the transition**
+Add all that up- Left hand mouse keyboard wizards coming from decades of PC use (with diminishing brain plasticity) using Mac OS 10.12+ (Sierra)...are pretty much screwed. These scripts are an attempt to ease the transition**
 
 \* Hello Karabiner Elements as a reaction to issues with keyboard Sierra hell for us GTD folks.
 
-** Also a hope is to forestall arthritis by having to do the contortions the Mac keyboard layout cause, like tucking the thumb under the palm on the right hand to get Command+X, etc.
+** Also a hope is to forestall arthritis by having to do the contortions the Mac keyboard layout cause, like tucking the thumb under the palm on the left hand to get Command+X, etc.
 
 ## Pasteboard, Right Hand?
 There is only one "real" keyboard layout for max efficiency (see below). Yes, you can get good on the Mac layout. The PC will just always be better. Mac has a layout that comes close, but where on a PC there is an insert key, the mac has a function key. So to get x/c/p on the right hand consistent with the standard PC x/c/p shortcuts of ctrl+insert, shift+delete (forward delete to those in mac land), and shift+insert, we have to use a program like Hammerspoon to (literally) take back control!
 
 ## Woah To Sierra Users
-Sierra changed the game with the key event model. None of this would be needed if this version of the OS didn't throw Karabiner off kilter. I'd just send folk to that app (https://pqrs.org/osx/karabiner/). Alas, it doesn't work under Sierra. Work is in progress on that, but who knows when it will be ready (downside of open source software).
+Sierra changed the game with the key event model. None of this would be needed if this version of the OS didn't throw Karabiner off kilter. I'd just send folks to that app (https://pqrs.org/osx/karabiner/). Alas, it doesn't work under Sierra. Work is in progress on that, but who knows when it will be ready (downside of open source software).
 
 ## Open Issues
-* Paste from shift+fn (trying to mimic shift+insert on a PC) not working in VirtualBox nor Microsoft Remote Desktop.
-* Copy from ctrl+fn (trying to mimic ctrl+insert on a PC) not working in Microsoft Remote Desktop.
 * No x/c/p functions work in MinTTY (bash emulator for git) on Windoz (VM)
 
 ## Why all these maps?
