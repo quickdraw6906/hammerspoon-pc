@@ -56,6 +56,7 @@ Sierra changed the game with the key event model. None of this would be needed i
 
 ## Open Issues
 * No x/c/p functions work in MinTTY (bash emulator for git) on Windoz (VM)
+* Ctrl+Fn & Shift+Fn don't work in Microsoft Remote Desktop (mods not sendings)
 
 ## Why all these maps?
 To replicate keyboard use with this PC layout, and a left hand mouser:
