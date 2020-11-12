@@ -56,7 +56,7 @@ end
 
 -- Send keyDown and keyUp events for a combo.
 -- Combo should be a table with a table of modifiers, and a key name to send
-function sendKey(combo, finishOfSequence)
+function sendKey(combo, finishOfSequence, returnEvent)
   -- If not passed a valid combo, just signal for the event to pass
   -- through to the OS (for apps that already behave like a PC (i.e., Microsoft Remote Desktop))
   if combo == nil or combo == false then return false end
@@ -69,8 +69,12 @@ function sendKey(combo, finishOfSequence)
   log('SENDING KEY: ' .. key .. ' w/ mods: ' .. hs.inspect(modifiers))
 
   -- keyDown event
+  if returnEvent then
+    log('Returning keyDown')
+    return getKeyEvent(modifiers, key, true)
+  end
+  log('Sending keyDown')
   hs.timer.delayed.new(.005, function()
-    log('Sending keyDown')
     getKeyEvent(modifiers, key, true):post()
     hs.timer.usleep(1000) -- tenth of a millisecond
     -- See comment at moveBeginingOfNextWord() below

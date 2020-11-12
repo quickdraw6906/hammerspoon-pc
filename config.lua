@@ -70,17 +70,17 @@ keyEvents = {
   end,
 
   ctrlFn         = function()
-                      ret = sendKey(getCombo('copyFn'))
+                      ret = sendKey(getCombo('copyFn'), true, true)
                       hs.timer.delayed.new(.5, function()
-                      if DEBUG and not hs.pasteboard.getContents() == nil then
-                        log('Special copy. pasteboard=' .. hs.pasteboard.getContents())
-                      end
-                    end):start()
+                        if DEBUG and not hs.pasteboard.getContents() == nil then
+                          log('Special copy. pasteboard=' .. hs.pasteboard.getContents())
+                        end
+                      end):start()
                     return ret
   end,
 
   shiftFn        = function()
-                      ret = sendKey(getCombo('pasteFn'))
+                      ret = sendKey(getCombo('pasteFn'), true, true)
                       hs.timer.delayed.new(.5, function()
                         if DEBUG and not hs.pasteboard.getContents() == nil then
                           log('Special paste. pasteboard=' .. hs.pasteboard.getContents())
@@ -118,6 +118,7 @@ keyFuncs = {
     --[92] = keyEvents.nine,
     [96] = keyEvents.ctrlR, -- F5 (reload)
     [99] = keyEvents.f3, -- F3
+    [114] = keyEvents.insert,
     [115] = keyEvents.home,
     [119] = keyEvents.endKey,
     [120] = keyEvents.f2 -- F2 (edit cell/ Finder: rename)
@@ -138,20 +139,24 @@ keyFuncs = {
     [13] = keyEvents.ctrlW,
     [15] = keyEvents.ctrlR,
     [16] = keyEvents.ctrlY,
+    [31] = keyEvents.ctrlO,
     [32] = keyEvents.ctrlU,
     [34] = keyEvents.ctrlI,
     [45] = keyEvents.ctrlN,
+    [114] = keyEvents.ctrlC,
     [115] = keyEvents.ctrlHome,
     [119] = keyEvents.ctrlEnd,
     [123] = keyEvents.ctrlRight,
     [124] = keyEvents.ctrlLeft
   },
   shiftMods = {
+    [114] = keyEvents.ctrlV,
     [115] = keyEvents.shiftHome,
     [117] = keyEvents.shiftFwdDelete,
     [119] = keyEvents.shiftEnd
   },
   ctrlShiftMods = {
+    [114] = keyEvents.shiftCtrlInsert,
     [115] = keyEvents.ctrlShiftHome,
     [119] = keyEvents.ctrlShiftEnd,
     [123] = keyEvents.ctrlShiftRight,

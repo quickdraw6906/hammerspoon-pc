@@ -26,6 +26,7 @@ require 'screen_grab'
 require 'taps_flagsChanged'
 require 'taps_keyDown'
 require 'taps_keyUp'
+require 'taps_primaryClickDown'
 
 -- -------------------------------------------------------------------------------------
 -- Key combo user enters replaced with a different combo- per application
@@ -43,4 +44,4 @@ require 'bindings'
 
 -- -------------------------------------------------------------------------------------
 
-hs.alert.show('Config loaded with console alpha level ' .. hs.console.alpha())
+hs.alert.show('Config loaded with console alpha level ' .. hs.console.alpha() .. '. Accessabilitity=' .. string.format("%s", hs.accessibilityState()))

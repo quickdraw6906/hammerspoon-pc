@@ -12,15 +12,33 @@
 etFlags = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function (e)
   --log('flagsChanged event: flags=' .. hs.inspect(e:getFlags()))
   flags = e:getFlags()
+  log('flagsChanged event flags=' .. hs.inspect(flags) .. ';keycode=' .. e:getKeyCode())
+
   if flags.fn then
+    local keyCombo = {}
     if hs.eventtap.checkKeyboardModifiers().ctrl then -- Ctrl + Fn is same position physically as Ctrl + Insert on PC keyboard
-      return keyEvents.ctrlFn()
+      keyCombo = getCombo('copyFn')
+    elseif hs.eventtap.checkKeyboardModifiers().shift then -- Shift + Fn is same position physically as Shift + Insert on a PC keyboard
+      keyCombo = getCombo('pasteFn')
+    else
+      return false -- Don't shunt, send as is
     end
-    if hs.eventtap.checkKeyboardModifiers().shift then -- Shift + Fn is same position physically as Shift + Insert on a PC keyboard
-      return keyEvents.shiftFn()
-    end
+    if keyCombo == nil or keyCombo == false then return false end
+    local modifiers = keyCombo[1]
+    local key = keyCombo[2]
+    if key == nil then return false end -- No combo for current app, just send event as is
+    event = sendKey(keyCombo, false, true)
+    --events = hs.eventtap.event.newKeyEventSequence(modifiers, key)
+    hs.timer.delayed.new(.3, function()
+      event:post()
+      -- for k, event in next, events do
+      --   event:post()
+      -- end
+    end):start()
+    return false
   end
 
+  --- Clear the console on hyperkey (only cmd+alt+ctrl)
   --- Clear the console on hyperkey (only cmd+alt+ctrl)
   if flags.cmd and flags.ctrl and flags.alt and CLEAR_LOG_ON_HYPER_KEY then
     hs.timer.delayed.new(.3, function()

@@ -1,14 +1,25 @@
+
+
+etNSKeyDown = hs.eventtap.new({hs.eventtap.event.types.NSSystemDefined}, function (e)
+--[[
+   log ('===================================================')
+   log('NSKeyDown event: keycode=' .. tostring(e:getKeyCode()) ..
+    '; userdata=' .. userData ..
+    '; semaphore=' ..  tostring(semaphore) ..
+    '; repeat=' .. tostring(repeatMode) ..
+    '; flags=' .. hs.inspect(e:getFlags()) )
+
+  dump(hs.eventtap.event.types)
+  ]]
+
+end)
+etNSKeyDown:start()
+
+
 etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
   -- local flags = hs.eventtap.checkKeyboardModifiers() -- Modifier keys user was pressing
   local flags = e:getFlags()
-
-  local userData = ''
-  if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == nil then
-    userData = 'nil'
-  else
-    userDate = tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA))
-  end
-
+  log ('===================================================')
   log('keyDown event: keycode=' .. tostring(e:getKeyCode()) ..
     '; userdata=' .. userData ..
     '; semaphore=' ..  tostring(semaphore) ..
@@ -16,6 +27,14 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
     '; flags=' .. hs.inspect(e:getFlags()) )
 
   --print(hs.inspect(hs.eventtap.event.properties['keyboardEventAutorepeat']))
+
+
+  local userData = ''
+  if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == nil then
+    userData = 'nil'
+  else
+    userDate = tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA))
+  end
 
   if skipToggle then
     log('skipToggle on. Skipping shortcut.')

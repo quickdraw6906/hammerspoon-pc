@@ -12,7 +12,7 @@ hs.hotkey.bind(ultra, 'c', function() launchAppAndTractorBeamToMouseScreen('Goog
 
 -- START Open Grab. Edit->Selection, [user selects an area], Edit->Copy, END (user left to close Grab app)
 hs.hotkey.bind({'alt'}, 'g', function() startNewGrabThenCopy() end)
-hs.hotkey.bind({'alt'}, 't', function() openNewTerminalWindow() end)
+--hs.hotkey.bind({'alt'}, 't', function() openNewTerminalWindow() end)
 
 -- -----------------------------------------------------------------------------
 -- Tools for writing Hammerspoon script
