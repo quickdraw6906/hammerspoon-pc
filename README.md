@@ -54,6 +54,10 @@ There is only one "real" keyboard layout for max efficiency (see below). Yes, yo
 ## Woah To Sierra Users
 Sierra changed the game with the key event model. None of this would be needed if this version of the OS didn't throw Karabiner off kilter. I'd just send folks to that app (https://pqrs.org/osx/karabiner/). Alas, it doesn't work under Sierra. Work is in progress on that, but who knows when it will be ready (downside of open source software).
 
+## Other Options
+damieng has posted a great set of default keymaps for the basic movements. Note however, that not all apps honor default key bindings in Mac OS (XCode, Firefox, etc.)
+https://damieng.com/blog/2015/04/24/make-home-end-keys-behave-like-windows-on-mac-os-x
+
 ## Open Issues
 * No x/c/p functions work in MinTTY (bash emulator for git) on Windoz (VM)
 * Ctrl+Fn & Shift+Fn don't work in Microsoft Remote Desktop (mods not sending)
