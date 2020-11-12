@@ -56,6 +56,7 @@ Sierra changed the game with the key event model. None of this would be needed i
 
 ## Other Options
 damieng has posted a great set of default keymaps for the basic movements. Note however, that not all apps honor default key bindings in Mac OS (XCode, Firefox, etc.)
+
 https://damieng.com/blog/2015/04/24/make-home-end-keys-behave-like-windows-on-mac-os-x
 
 ## Open Issues
