@@ -126,7 +126,7 @@ combo = {
     VirtualBox_VM = {},
     Microsoft_Remote_Desktop = {},
     -- SKip in browsers. cmd+arrows used to navigate pages
-    Google_Chrome = {},
+    Google_Chrome = {{'cmd'}, 'right'},
     Safari = {},
     Firefox = {},
     Opera = {}
@@ -143,7 +143,7 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
     -- SKip in browsers. cmd+arrows used to navigate pages
-    Google_Chrome = {},
+    Google_Chrome = {{'cmd'}, 'left'},
     Safari = {},
     Firefox = {},
     Opera = {}
