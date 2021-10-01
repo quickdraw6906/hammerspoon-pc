@@ -86,7 +86,7 @@ function sendKey(combo, finishOfSequence, returnEvent)
     if not repeatMode then
       -- keyUp event
       hs.timer.delayed.new(.005, function()
-        log('sending keyUp')
+        log('Sending keyUp')
         getKeyEvent(modifiers, key, false, finishOfSequence):post()
       end):start()
     end
@@ -119,6 +119,10 @@ function getCombo(strCombo)
   if keyCombo == nil then
     log('No combo for ' .. app)
     keyCombo = comboNode['default']
+    log('Using default combo ' .. hs.inspect(keyCombo))
+    if keyCombo ~= nil then
+      log('Using default combo ' .. hs.inspect(keyCombo))
+    end
   end
   if keyCombo == nil then
     log('No defined or default combo for ' .. strCombo )

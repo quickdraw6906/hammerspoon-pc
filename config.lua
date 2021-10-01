@@ -1,4 +1,4 @@
-DEBUG = false
+DEBUG = true
 CLEAR_LOG_ON_HYPER_KEY = true
 EVENTPROPERTY_EVENTSOURCEUSERDATA = 42 -- print(hs.inspect(hs.eventtap.event.properties))
 -- For bindings that require canceling the current key event and spawing a new event with a delay
@@ -55,7 +55,7 @@ keyEvents = {
   f2             = function()  return sendKeyOrMenu('rename') end,
   f3             = function()  return sendKeyOrMenu('findagain') end,
 
-  -- Thse are being monitored special because of issue where taps (keyDown) are inexplicably stopping
+  -- These are being monitored special because of issue where taps (keyDown) are inexplicably stopping
   -- Goal: Store eventtaps as variables, if I find taps are not trapping events, hit a shortcut to log
   -- out the eventtap variables. If they are still there, then that will help narrow down the problem
   -- (i.e., get as much data as possible before filing the issue).

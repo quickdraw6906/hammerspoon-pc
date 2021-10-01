@@ -23,10 +23,10 @@ hs.window.animationDuration = 0
 require '3rdparty'
 require 'functions'
 require 'screen_grab'
-require 'taps_flagsChanged'
 require 'taps_keyDown'
 require 'taps_keyUp'
 require 'taps_primaryClickDown'
+require 'taps_flagsChanged'
 
 -- -------------------------------------------------------------------------------------
 -- Key combo user enters replaced with a different combo- per application

@@ -26,8 +26,7 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
     '; repeat=' .. tostring(repeatMode) ..
     '; flags=' .. hs.inspect(e:getFlags()) )
 
-  --print(hs.inspect(hs.eventtap.event.properties['keyboardEventAutorepeat']))
-
+  print(hs.inspect(hs.eventtap.event.properties['keyboardEventAutorepeat']))
 
   local userData = ''
   if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == nil then
@@ -89,14 +88,4 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
 
 end)
 etKeyDown:start()
--- -------------------------------------------------------------------------------------
--- Expirimental: Cancel any other keyboard events while another binding action (script) is working
-ekKeyDownShuntCtrl = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
-  --print('keyDown (shunt) event userdata=' .. tostring(e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA)) .. "; Semaphore=" ..  tostring(semaphore))
-  if e:getFlags().ctrl == true
-      and e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) < 55555
-      and semaphore == 1 then
-    print('Shunting ctrl event')
-    return true --
-  end
-end)
+print('etKeyDown started')

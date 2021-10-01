@@ -9,6 +9,7 @@ etKeyUp = hs.eventtap.new({hs.eventtap.event.types.keyUp}, function (e)
   -- If a scripted action needed to block other keyboard events, then look
   -- for a key up event from the last event in the scripted chain of events
   -- and disable the event shunt eventtap and this eventtap
+  --[[]
   if e:getProperty(EVENTPROPERTY_EVENTSOURCEUSERDATA) == 55556 then
     --log('Disabling shunt')
     ekKeyDownShuntCtrl:stop()
@@ -18,6 +19,7 @@ etKeyUp = hs.eventtap.new({hs.eventtap.event.types.keyUp}, function (e)
     --e:setFlags({})
     --log('Unset flags. flags=' .. hs.inspect(e:getFlags()))
   end
+  ]]
 
   if repeatMode then
     repeatMode = false

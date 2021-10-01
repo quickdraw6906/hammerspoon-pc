@@ -128,7 +128,6 @@ combo = {
     -- SKip in browsers. cmd+arrows used to navigate pages
     Google_Chrome = {{'cmd'}, 'right'},
     Safari = {},
-    Firefox = {},
     Opera = {}
   },
   selectEndLine = {
@@ -145,7 +144,6 @@ combo = {
     -- SKip in browsers. cmd+arrows used to navigate pages
     Google_Chrome = {{'cmd'}, 'left'},
     Safari = {},
-    Firefox = {},
     Opera = {}
   },
   selectBeginLine = {
