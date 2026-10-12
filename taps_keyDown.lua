@@ -71,10 +71,6 @@ etKeyDown = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function (e)
   end
 
   if flags.ctrl and not flags.shift then
-    if isTerminalApp() and e:getKeyCode() < 100 then
-      log('Terminal app active. Passing raw ctrl+{char} event through (keycode=' .. tostring(e:getKeyCode()) .. ')')
-      return false
-    end
     return execKeyFunction('ctrlMods', e:getKeyCode(), e)
   end
 

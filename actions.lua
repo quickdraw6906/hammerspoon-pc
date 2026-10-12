@@ -94,17 +94,29 @@ combo = {
   save = {
     default = {{'cmd'}, 's'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    Terminal = {},
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {}
   },
   undo = {
     default = {{'cmd'}, 'z'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    Terminal = {},
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {}
   },
   redo = {
     default = {{'cmd'}, 'y'}, -- Not always implemented by apps. Try removing to have a menu item attempted
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {{'ctrl'}, 'y'}
+    VirtualBox_VM = {{'ctrl'}, 'y'},
+    Terminal = {},
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {}
   },
   -- On a mac, option+right jumps to end of current word (then ends of subsequent words).
   -- On a PC, control+right jumps to begin of next word (sigh)
@@ -135,6 +147,7 @@ combo = {
     Terminal = {{'alt'}, 'right'},
     iTerm = {{}, 'end'},
     iTerm2 = {{}, 'end'},
+    cmux = {},
     VirtualBox_VM = {},
     Microsoft_Remote_Desktop = {},
     -- SKip in browsers. cmd+arrows used to navigate pages
@@ -152,6 +165,7 @@ combo = {
     Terminal = {{'alt'}, 'left'},
     iTerm = {},
     iTerm2 = {},
+    cmux = {},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
     -- SKip in browsers. cmd+arrows used to navigate pages
@@ -188,6 +202,7 @@ combo = {
     default = {{'cmd'}, 'o'},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
+    Terminal = {},
     iTerm = {},
     iTerm2 = {},
     cmux = {}
@@ -195,18 +210,27 @@ combo = {
   new = {
     default = {{'cmd'}, 'n'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    Terminal = {},
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {}
   },
   close = {
     default = {{'cmd'}, 'w'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    Terminal = {},
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {}
   },
   selectAll = {
     --default = {{'cmd'}, 'a'}, -- Deprecated. For an unknown reason, cmd+a would not send! Since no default here, sendKeyOrMenu() will look to send a menu command instead
     Terminal = {},
     iTerm = {},
     iTerm2 = {},
+    cmux = {},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
@@ -231,11 +255,19 @@ combo = {
   underline = {
     default = {{'cmd'}, 'u'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    Terminal = {},
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {}
   },
   reload = {
     default= {},
     Google_Chrome = {{'cmd'}, 'r'},
+    Terminal = {},
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {}
   },
   rename = {
     Google_Chrome = {{}, 'F2'}

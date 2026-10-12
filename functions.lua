@@ -22,54 +22,6 @@ function flipSkipToggle()
   end
 end
 
-function isTerminalApp(app)
-  if app == nil then
-    app = hs.application.frontmostApplication()
-  end
-  if app == nil then return false end
-
-  local bundleID = app:bundleID() or ''
-  local name = app:name() or ''
-
-  local terminalBundleIDs = {
-    ['com.apple.Terminal'] = true,
-    ['com.googlecode.iterm2'] = true,
-    ['com.mitchellh.ghostty'] = true,
-    ['org.alacritty'] = true,
-    ['net.kovidgoyal.kitty'] = true,
-    ['com.github.wez.wezterm'] = true,
-    ['dev.warp.Warp-Stable'] = true,
-    ['co.zeit.hyper'] = true,
-    ['org.tabby'] = true,
-    ['com.raphaelamorim.rio'] = true,
-    ['net.macterm.MacTerm'] = true,
-    ['com.termius-dan_networks.mac'] = true,
-    ['com.termius.mac'] = true
-  }
-  if terminalBundleIDs[bundleID] then return true end
-
-  local lowerName = string.lower(name)
-  local terminalNames = {
-    ['terminal'] = true,
-    ['iterm'] = true,
-    ['iterm2'] = true,
-    ['ghostty'] = true,
-    ['alacritty'] = true,
-    ['kitty'] = true,
-    ['wezterm'] = true,
-    ['wezterm-gui'] = true,
-    ['warp'] = true,
-    ['hyper'] = true,
-    ['tabby'] = true,
-    ['rio'] = true,
-    ['macterm'] = true,
-    ['termius'] = true
-  }
-  if terminalNames[lowerName] then return true end
-
-  return false
-end
-
 function execKeyFunction(mods, kc, triggeringEvent)
   local keyFunction = nil
   local ret = false
@@ -169,9 +121,6 @@ function getCombo(strCombo)
     keyCombo = comboNode['iTerm2']
   elseif keyCombo == nil and app == 'iTerm2' then
     keyCombo = comboNode['iTerm']
-  end
-  if keyCombo == nil and isTerminalApp(frontApp) then
-    keyCombo = comboNode['Terminal']
   end
   if keyCombo == nil then
     log('No combo for ' .. app)
