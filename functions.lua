@@ -22,6 +22,54 @@ function flipSkipToggle()
   end
 end
 
+function isTerminalApp(app)
+  if app == nil then
+    app = hs.application.frontmostApplication()
+  end
+  if app == nil then return false end
+
+  local bundleID = app:bundleID() or ''
+  local name = app:name() or ''
+
+  local terminalBundleIDs = {
+    ['com.apple.Terminal'] = true,
+    ['com.googlecode.iterm2'] = true,
+    ['com.mitchellh.ghostty'] = true,
+    ['org.alacritty'] = true,
+    ['net.kovidgoyal.kitty'] = true,
+    ['com.github.wez.wezterm'] = true,
+    ['dev.warp.Warp-Stable'] = true,
+    ['co.zeit.hyper'] = true,
+    ['org.tabby'] = true,
+    ['com.raphaelamorim.rio'] = true,
+    ['net.macterm.MacTerm'] = true,
+    ['com.termius-dan_networks.mac'] = true,
+    ['com.termius.mac'] = true
+  }
+  if terminalBundleIDs[bundleID] then return true end
+
+  local lowerName = string.lower(name)
+  local terminalNames = {
+    ['terminal'] = true,
+    ['iterm'] = true,
+    ['iterm2'] = true,
+    ['ghostty'] = true,
+    ['alacritty'] = true,
+    ['kitty'] = true,
+    ['wezterm'] = true,
+    ['wezterm-gui'] = true,
+    ['warp'] = true,
+    ['hyper'] = true,
+    ['tabby'] = true,
+    ['rio'] = true,
+    ['macterm'] = true,
+    ['termius'] = true
+  }
+  if terminalNames[lowerName] then return true end
+
+  return false
+end
+
 function execKeyFunction(mods, kc, triggeringEvent)
   local keyFunction = nil
   local ret = false
@@ -107,7 +155,8 @@ end
 -- Lookup a named combo from a structure (see config_pckeys.lua) and return a table of the modifiers + key to send
 function getCombo(strCombo)
   -- Look up combo from combo table
-  local app = string.gsub(hs.application.frontmostApplication():name(), ' ', '_')
+  local frontApp = hs.application.frontmostApplication()
+  local app = string.gsub(frontApp:name(), ' ', '_')
   app = string.gsub(app, '^%d', 'N') -- Tabe indicies can't start with a number
   log('Getting combo ' .. strCombo .. ' with subkey ' .. app)
   local comboNode = combo[strCombo]
@@ -116,6 +165,14 @@ function getCombo(strCombo)
     return nil
   end
   local keyCombo = comboNode[app]
+  if keyCombo == nil and app == 'iTerm' then
+    keyCombo = comboNode['iTerm2']
+  elseif keyCombo == nil and app == 'iTerm2' then
+    keyCombo = comboNode['iTerm']
+  end
+  if keyCombo == nil and isTerminalApp(frontApp) then
+    keyCombo = comboNode['Terminal']
+  end
   if keyCombo == nil then
     log('No combo for ' .. app)
     keyCombo = comboNode['default']
@@ -145,7 +202,7 @@ function getMenuPath(strMenuName)
     log('No combo found for ' .. app .. '. Looking for default combo...')
     menuPth = menuNode['default']
   end
-  if menuPth == nill then
+  if menuPth == nil then
     log('No menu item found')
     return {} -- No valid combo in table. Pass through event to OS.
   end
@@ -167,13 +224,15 @@ function sendKeyOrMenu(operation)
     if next(combo) ~= nil then
         -- Key combo found, returning that
         return sendKey(combo, true)
+    else
+        -- Pass through original event
+        return false
     end
-    -- Here = pass through original event
   else
     log('Looking for menu...')
     -- No combo found. Look for menu path
     local menuPth = getMenuPath(operation)
-    if next(menuPth) == nill then
+    if next(menuPth) == nil then
       return false
     end -- No menu found, pass event onto OS unaltered
     log('Activating menu path ' .. hs.inspect(menuPth))

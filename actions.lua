@@ -44,13 +44,18 @@ combo = {
     Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
     VirtualBox_VM = {},
     Terminal  = {},
+    iTerm = {},
     iTerm2 = {},
+    cmux = {}
   },
   cut = { -- No default key here will signal a menu command instead. See sendKeyOrMenu()
     default = {{'cmd'}, 'x'},
     Microsoft_Remote_Desktop = {}, -- Non Mac OS contexts need this so a menu item isn't attempted by sendKeyOrMenu()
     VirtualBox_VM = {},
+    Terminal = {},
+    iTerm = {},
     iTerm2 = {},
+    cmux = {},
     FileZilla = {{'cmd'}, 'x'}  -- Doesn't work. Apps that don't have menu items are half baked.
   },
   copy = {
@@ -58,7 +63,9 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
     Terminal = {}, -- Pass through as ctrl+c (stop)
+    iTerm = {},
     iTerm2 = {},
+    cmux = {},
     NPassword_6 = {{'cmd'}, 'c'},
     FileZilla = {{'cmd'}, 'c'} -- Doesn't work. Apps that don't have menu items are half baked.
   },
@@ -66,6 +73,10 @@ combo = {
     default = {{'cmd'}, 'v'},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
+    Terminal = {},
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {},
     FileZilla = {{'cmd'}, 'v'}  -- Doesn't work. Apps that don't have menu items are half baked.
   },
   -- Next two are special cases where the triggering action is the holding of mofidiers only,
@@ -122,6 +133,7 @@ combo = {
   endLine = {
     default = {{'cmd'}, 'right'},
     Terminal = {{'alt'}, 'right'},
+    iTerm = {{}, 'end'},
     iTerm2 = {{}, 'end'},
     VirtualBox_VM = {},
     Microsoft_Remote_Desktop = {},
@@ -138,6 +150,7 @@ combo = {
   beginLine = {
     default = {{'cmd'}, 'left'},
     Terminal = {{'alt'}, 'left'},
+    iTerm = {},
     iTerm2 = {},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
@@ -174,7 +187,10 @@ combo = {
   open = {
     default = {{'cmd'}, 'o'},
     Microsoft_Remote_Desktop = {},
-    VirtualBox_VM = {}
+    VirtualBox_VM = {},
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {}
   },
   new = {
     default = {{'cmd'}, 'n'},
@@ -188,7 +204,9 @@ combo = {
   },
   selectAll = {
     --default = {{'cmd'}, 'a'}, -- Deprecated. For an unknown reason, cmd+a would not send! Since no default here, sendKeyOrMenu() will look to send a menu command instead
-    Terminal = {'ctrl', 'a'},
+    Terminal = {},
+    iTerm = {},
+    iTerm2 = {},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {}
   },
@@ -197,13 +215,18 @@ combo = {
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
     Terminal  = {}, -- Back in vi
+    iTerm = {},
     iTerm2 = {},
+    cmux = {}
   },
   italic = {
     default = {{'cmd'}, 'i'},
     Microsoft_Remote_Desktop = {},
     VirtualBox_VM = {},
     Terminal  = {}, -- Insert in vi
+    iTerm = {},
+    iTerm2 = {},
+    cmux = {}
   },
   underline = {
     default = {{'cmd'}, 'u'},
