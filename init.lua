@@ -20,28 +20,62 @@ hs.hotkey.alertDuration=0
 hs.hints.showTitleThresh = 0
 hs.window.animationDuration = 0
 
-require '3rdparty'
-require 'functions'
-require 'screen_grab'
-require 'taps_keyDown'
-require 'taps_keyUp'
-require 'taps_primaryClickDown'
-require 'taps_flagsChanged'
+local startup = require 'startup'
 
--- -------------------------------------------------------------------------------------
--- Key combo user enters replaced with a different combo- per application
--- Define/Edit shortcuts to emit for an action in a application (includes defining a catch-all action)
-require 'actions'
+-- Compile every module before executing any of them. A syntax error must never leave a
+-- partially loaded configuration intercepting keyboard or mouse input.
+local configModules = {
+  'application',
+  '3rdparty',
+  'functions',
+  'screen_grab',
+  'actions',
+  'config',
+  'taps_keyDown',
+  'taps_keyUp',
+  'taps_primaryClickDown',
+  'taps_flagsChanged',
+  'bindings'
+}
 
--- -------------------------------------------------------------------------------------
--- Defines alernate actions for many Mac OS shortcuts.
--- Create/Edit PC shortcuts to the action that gets performed on a PC
-require 'config'
+inputHotkeys = {}
 
--- -------------------------------------------------------------------------------------
--- Set up other shortcuts you want to be in play here
-require 'bindings'
+function bindInputHotkey(...)
+  local hotkey = hs.hotkey.bind(...)
+  table.insert(inputHotkeys, hotkey)
+  return hotkey
+end
 
--- -------------------------------------------------------------------------------------
+local function disableInputHooks()
+  local hooks = {
+    etNSKeyDown,
+    etKeyDown,
+    etKeyUp,
+    etRtClickDown,
+    etFlags
+  }
 
-hs.alert.show('Config loaded with console alpha level ' .. hs.console.alpha() .. '. Accessabilitity=' .. string.format("%s", hs.accessibilityState()))
+  for _, hotkey in ipairs(inputHotkeys) do
+    table.insert(hooks, hotkey)
+  end
+
+  startup.stopHooks(hooks)
+end
+
+local loaded, loadError = startup.run(
+  configModules,
+  nil,
+  nil,
+  require,
+  function(message)
+    disableInputHooks()
+    print('FATAL: Configuration failed to load. All input hooks were disabled.\n' .. tostring(message))
+    pcall(hs.alert.show, 'Configuration error: input hooks disabled. See the Hammerspoon console.')
+  end
+)
+
+if loaded then
+  hs.alert.show('Config loaded with console alpha level ' .. hs.console.alpha() .. '. Accessabilitity=' .. string.format("%s", hs.accessibilityState()))
+else
+  print(loadError)
+end
